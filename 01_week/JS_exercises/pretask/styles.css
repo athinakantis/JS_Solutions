@@ -1,0 +1,26 @@
+* {
+    font-family: Arial, sans-serif;
+    background-color: pink;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1 {
+    background-color: white;
+    font-size: 42px;
+
+    padding: 10px;
+
+    border-radius: 15px;
+    transition: 2s;
+}
+
+h1:hover{
+    letter-spacing: 2px;
+    transition: 2s;
+}
