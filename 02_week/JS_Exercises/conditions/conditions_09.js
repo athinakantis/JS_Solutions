@@ -13,10 +13,10 @@ function secretWordGame(word) {
         return 'You found the secret word!'
     } else if (word[0] === 'J') {
         return `You're close, but not quite!`
-    } else if (word.substring(-1) === 't') {
-        return 'Almost there!'
     } else if (word.includes('e')) {
         return 'Good guess, but not the secret word!'
+    } else if (word[word.length - 1] === 't') {
+        return 'Almost there!'
     } else {
         return 'Keep trying!'
     }
