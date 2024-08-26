@@ -3,7 +3,7 @@ Refine the getLastCharacter function so that it returns the last character from 
  */
 
 function getLastCharacter(name) {
-  return name[name.length -1]
+  return name[name.length - 1]
 }
 
 // Sample usage - do not modify

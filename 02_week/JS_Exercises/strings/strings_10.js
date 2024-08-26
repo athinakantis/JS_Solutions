@@ -3,7 +3,7 @@ Refine the capitalize function to ensure it capitalizes the first letter of the 
  */
 
 function capitalize(word) {
-    return `${word[0].toUpperCase()}${word.substring(1).toLowerCase()}`
+    return word[0].toUpperCase() + word.substring(1).toLowerCase()
 }
 
 // Sample usage - do not modify
