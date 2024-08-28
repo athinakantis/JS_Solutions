@@ -4,9 +4,9 @@
 
 function averageSpeed() {
     while (true) {
-        let km = prompt('How many kilometers?')
+        let km = +prompt('How many kilometers?') // All input are strings. Don't forget to convert the type
         if (km == 0) {break;}
-        let h = prompt('How many hours?')
+        let h = +prompt('How many hours?')
         console.log(`Your average speed is ${km/h} km/h`)
     }
 }
