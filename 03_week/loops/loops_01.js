@@ -5,5 +5,3 @@ function odd(){
         console.log(i)
     }
 }
-
-odd()

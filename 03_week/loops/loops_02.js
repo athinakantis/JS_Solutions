@@ -5,5 +5,3 @@ function evenPositive() {
         console.log(i, 100-i)
     }
 }
-
-evenPositive()
