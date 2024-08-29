@@ -3,7 +3,7 @@
 function howManyEven() {
     let count = 0
     for (let i = 0; i < 20; i++){
-        let num = prompt('Please write a number')
+        let num = +prompt('Please write a number')
         if (num % 2 === 0) {count++}
     }
     console.log(`You wrote ${count} equal numbers`)
