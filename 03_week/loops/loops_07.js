@@ -2,18 +2,19 @@
 
 function tenNumbers(){
     let total = 0;
-    let smallestNum = undefined;
-    let biggestNum = undefined;
+    let smallestNum = Infinity
+    let biggestNum = -Infinity
 
     for (let i = 0; i < 10; i++){
         let num = +prompt('Please enter a total of 10 numbers, one at a time:')
-        if (smallestNum === undefined && biggestNum === undefined) {
-            smallestNum = num
-            biggestNum = num
-        } else if (num > biggestNum) {
-            biggestNum = num
+
+        if(isNaN(num)) {
+            alert('Please enter valid a valid integer!');
+            i--
         } else if (num < smallestNum) {
             smallestNum = num
+        } else if (num > biggestNum) {
+            biggestNum = num
         }
         total += num;
     }

@@ -4,10 +4,12 @@ function averageNum(){
     let total = 0
     let count = 0
 
-    while (true) {
+    do {
         let num = +prompt('Write a number')
         if (num === 0) {break;}
-        total += num; count += 1
-    }
+        total += num; 
+        count += 1;
+    } while (num !== 0);
+    
     alert(`The average of all numbers entered is ${total/count}`)
 }

@@ -4,7 +4,11 @@ function howManyEven() {
     let count = 0
     for (let i = 0; i < 20; i++){
         let num = +prompt('Please write a number')
-        if (num % 2 === 0) {count++}
+
+        if (typeof num !== 'number' || isNaN(num)) {    // Checking if input is integer
+            alert('Please enter a valid number')
+            i--
+        } else if (num % 2 === 0) {count++}
     }
     console.log(`You wrote ${count} equal numbers`)
 }

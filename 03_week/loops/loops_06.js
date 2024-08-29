@@ -2,13 +2,19 @@
 
 function anotherOne() {
     let total = 0; let count = 0;
+    
     while (true) {
         let num = +prompt('Please provide a number')
-        total += num; 
-        count++;
-        let confirmation = confirm('Would you like to provide more numbers?')
-        if (confirmation) {continue}
-        break;
+
+        if (isNaN(num)) {
+            alert('Please provide a valid integer')
+        } else {
+            total += num; 
+            count++;
+            let confirmation = confirm('Would you like to provide more numbers?')
+            if (confirmation) {continue}
+            break;
+        }
     }
     console.log(`Total average of all numbers is ${total/count}`)
 }

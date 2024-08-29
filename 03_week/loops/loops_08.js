@@ -17,20 +17,17 @@ function howManyTimes(){
     }
 
 
-    let biggestNum, smallestNum;
+    let biggestNum = -Infinity
+    let smallestNum = Infinity
     let total = 0;
 
     // Making sure user input is an integer
     for (let i = 0; i < times; i++){
         let num = +prompt('Enter a number')
 
-        if (typeof num !== 'number' || isNaN(num)) {
+        if (isNaN(num)) {
             alert('Number has to be a positive or negative integer');
             i--
-        } else if (biggestNum === undefined) {
-            total += num
-            biggestNum = num
-            smallestNum = num
         } else if (num > biggestNum) {
             total += num
             biggestNum = num
