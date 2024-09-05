@@ -1,0 +1,99 @@
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 200;;
+  background-color: #fff8f0;
+  color: #5a4a42;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+
+.container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 80%;
+}
+
+.image-container {
+  position: relative;
+  flex: 1;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-container {
+  flex: 1;
+  padding: 20px;
+}
+
+.price-banner {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #d17b49;
+  color: white;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes bounce {
+  0% {transform: translateY(0)}
+  50% {transform: translateY(-5px)}
+  100% {transform: translateY(0)}
+}
+
+.bounce {
+  animation-name: bounce;
+  animation-duration: 500ms;
+}
+
+
+@media (max-width: 1280px){
+
+  body {
+    flex-direction: column;
+    justify-content: flex-start;
+    font-size: 1.5em;
+  }
+
+  .image-container img{
+    height: 400px;
+    width: 100vw;
+    object-fit: cover;
+  }
+
+  .container {
+    height: 100vh;
+    width: 100%;
+    display: block;
+  }
+
+  .price-display {
+    text-align: center;
+    font-size: 1.7em;
+  }
+
+  .price-banner {
+    width: 150px;
+    height: 150px;
+    font-size: 1.5em;
+    left: 80%;
+    top: 50%;
+  }
+}
