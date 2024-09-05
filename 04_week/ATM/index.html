@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goliath National Bank</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+    <header>
+    <h1>Goliath National Bank</h1>
+    <button id='logout'>Log out</button>
+    </header>
+    
+    <section>
+        <p>What would you like to do?</p>
+        <div class='options'>
+            <button id='checkbalance'>Check balance</button>
+            <button id='deposit'>Deposit</button>
+            <button id='withdraw'>Withdraw</button>
+        </div>
+
+
+        <form action="" hidden>
+            <label for="amount">How much would you like to <span id="option"></span>?</label>
+            <input id='amount' type="number" name='amount'placeholder='$0.00' step='100' min='0'>
+            <input id='confirm' type="button" value="✓">
+        </form>
+
+
+        <div id='status' hidden>
+            <p id='serverReply'></p>
+        </div>
+    </section>
+
+    </main>
+    <script src='main.js'></script>
+</body>
+</html>

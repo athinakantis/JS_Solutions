@@ -5,18 +5,24 @@ function checkBalance() {
 }
 
 function deposit(amount) {
-    balance += amount
-    return balance
+    if (amount < 1) {
+        alert(`Amount cannot be less than 1!`)
+    }
+    return balance += amount
 }
 
 function withdraw(amount) {
-    balance -= amount
-    return balance
+    if (amount > balance) {
+        alert(`Cannot withdraw more than balance`)
+    } else if (amount < 1) {
+        alert(`Amount cannot be less than 1!`)
+    }
+    return balance -= amount
 }
 
 function main(){
     while (true) {
-        let request = prompt('What would you like to do?');
+        let request = prompt('What would you like to do?\nCheck balance\nWithdraw\nDeposit\nExit');
         request = request.toLowerCase()
         console.log(request)
     
@@ -31,7 +37,6 @@ function main(){
             let amount = +prompt('How much would you like to withdraw?')
             withdraw(amount)
             alert(`You have withdrawn ${amount}!`)
-
         }
     }
 }
