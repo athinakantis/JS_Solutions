@@ -14,10 +14,14 @@ const input = document.getElementById('fruitInput')
 const button = document.getElementById('addFruitBtn')
 
 function addFruit() {
-    let newFruit = document.createElement('li') 
-    newFruit.textContent = `${input.value}`
-    fruitList.appendChild(newFruit)
-    input.value = null
+    if (!input.value) {
+        alert('Please give the fruit a name!! :(')
+    } else {
+        let newFruit = document.createElement('li') 
+        newFruit.textContent = `${input.value}`
+        fruitList.appendChild(newFruit)
+        input.value = null
+    }
 }
 
 

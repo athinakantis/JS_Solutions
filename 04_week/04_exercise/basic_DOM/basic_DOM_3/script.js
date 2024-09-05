@@ -29,4 +29,4 @@ function changeText() {
     displayText.textContent = inputText.value
 }
 
-input.addEventListener('change', () => changeText())
+input.addEventListener('keyup', () => changeText())
