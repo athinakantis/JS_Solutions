@@ -4,8 +4,11 @@ let basePrice = +document.querySelector('#type').value
 let toppingsPrice = 0;
 let deliveryCost = 0;
 let pancake = {pancakeBase: 'Classic', toppings: [], extras: []}
+let savedOrders = []
 
 
+
+/* Listening for changes in customization */
 document.addEventListener('change', (e) => {
     if (e.target.id === 'type') {
         basePrice = +e.target.value
@@ -13,10 +16,10 @@ document.addEventListener('change', (e) => {
     } else if (e.target.name === 'topping') {
         if (e.target.checked) {
             toppingsPrice ++
-            pancake.extras.push(e.target.id)
+            pancake.toppings.push(e.target.id)
         } else {
             toppingsPrice--
-            pancake.extras.filter((a) => a !== e.target.id)
+            pancake.toppings.filter((a) => a !== e.target.id)
         }
     } else if (e.target.name === 'extra') {
         if (e.target.checked) {
@@ -35,7 +38,7 @@ document.addEventListener('change', (e) => {
 
 
 
-
+/* Update Price */
 function updatePrice() {
     for (let element of displayPrice) {
         element.textContent = `$${basePrice + toppingsPrice + deliveryCost}`
@@ -44,31 +47,53 @@ function updatePrice() {
     }
 }
 
-let button = document.querySelector('button')
-let orderDetails = document.querySelectorAll('.summary p')
 
 
 
 
-button.addEventListener('click', () => {
+//Show order
+const seeOrderBtn = document.querySelector('#seeOrder')
+const summaryDetails = document.querySelectorAll('.summary p')
+seeOrderBtn.addEventListener('click', () => {
+    console.log(document.querySelector('input[name="delivery"]:checked').id)
 
-    //Displaying customer name
-    orderDetails[0].textContent = `Name: ${document.querySelector('#customerName').value}`
+    document.querySelector('.summary').classList.toggle('hidden')
+    document.querySelector('.form-container').classList.toggle('hidden')
+    summaryDetails[0].textContent = `Name: ${document.querySelector('#customerName').value}`
 
     
-
+    let formattedExtras = []
     for (let extra of pancake.extras) {
-        extra = extra.split('C')
-        extra[0][0] = extra[0][0].toUpperCase()
-        extra = extra.join(' C')
-        console.log(extra)
+        extra += ' Cream'
+        formattedExtras.push(extra)
     }
-    //Displaying pancake details
-    orderDetails[1].textContent = `Your order: ${pancake.pancakeBase} pancake, Toppings: ${pancake.toppings}, Extras: ${pancake.extras}`
+
+
+    document.querySelector('#pancakeDetails').textContent = `${pancake.pancakeBase} pancake, Toppings: ${pancake.toppings.length > 0 ? pancake.toppings : 'None'}, Extras: ${pancake.extras.length > 0 ? formattedExtras : 'None'}`
  
 
-    //Displaying delivery cost
     if (deliveryCost === 5) {
-        orderDetails[3].textContent = `Delivery fee: `
+        document.querySelector('#deliveryCost').textContent = `, including a $5 delivery fee`
     }
+})
+
+
+
+//Saving order functionality
+const saveOrderBtn = document.querySelector('#saveOrder')
+saveOrderBtn.addEventListener('submit', () => {
+    let order = {customerName: summaryDetails[0].textContent,
+                pancake: pancake,
+                deliveryMethod: document.querySelector('input[name="delivery"]:checked').id
+    }
+    console.log(order)
+    savedOrders.push(order)
+})
+
+
+//Return to pancake customization
+const returnBtn = document.querySelector('#return')
+returnBtn.addEventListener('click', () => {
+    document.querySelector('.summary').classList.toggle('hidden')
+    document.querySelector('.form-container').classList.toggle('hidden')
 })

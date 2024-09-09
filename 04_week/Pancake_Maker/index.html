@@ -7,7 +7,7 @@
   </head>
   
   <body>
-    <div class="container">
+    <div class="customization-container">
       <div class="image-container">
         <img src="pancake.jpeg" alt="Delicious pancakes" />
         <div class="price-banner"><span id="totalPrice">$5</span></div>
@@ -24,42 +24,49 @@
         </div>
         <div class="customization-section">
           <p>Select your toppings ($1 each):</p>
-          <input type="checkbox" name='topping' id="nuts" value="1" />Nuts<br />
-          <input type="checkbox" name='topping' id="bananas" value="1" />Bananas<br />
-          <input type="checkbox" name='topping' id="syrup" value="1" />Syrup<br />
+          <input type="checkbox" name='topping' id="Nuts" value="1" />Nuts<br />
+          <input type="checkbox" name='topping' id="Bananas" value="1" />Bananas<br />
+          <input type="checkbox" name='topping' id="Syrup" value="1" />Syrup<br />
         </div>
         <div class="customization-section">
           <p>Add extras:</p>
-          <input type="checkbox" name='extra' id="whippedCream" value="2" />Whipped Cream -
+          <input type="checkbox" name='extra' id="Whipped" value="2" />Whipped Cream -
           $2<br />
-          <input type="checkbox" name='extra' id="iceCream" value="3" />Ice Cream - $3<br />
+          <input type="checkbox" name='extra' id="Ice" value="3" />Ice Cream - $3<br />
         </div>
+
 
         <div class="order-details">
           <label for="customerName">Name:</label>
-          <input type="text" id='customerName'><br/>
+          <input type="text" id='customerName' required><br/>
 
           <label for="delivery">Delivery option:</label><br/>
-          <input type="radio" name="delivery" id=""> Eat in<br/>
-          <input type="radio" name="delivery" id="">Pick up<br/>
+          <input type="radio" name="delivery" id="eatIn" checked>Eat in<br/>
+          <input type="radio" name="delivery" id="pickUp">Pick up<br/>
           <input type="radio" name="delivery" id="delivery">Delivery<br/>
         </div>
-
-        <div class="summary">
-          <h3>Your order summary:</h3>
-          <p id=''>Name: </p>
-          <p id='pancakeDetails'>Your order:</p>
-          <p>Price: <span id='totalPrice'>$5</span></p>
-          <p id="deliveryCost"><span id=''></span></p>
-        </div>
-
-        <button type='button'>See order</button>
 
         <div class="price-display">
           <h3>Total Price: <span id="totalPrice">$5</span></h3>
         </div>
+        <button type='button' id="seeOrder">See order</button>
+        </div>
+
+        <div class="summary hidden">
+          <h2>Your order summary:</h3>
+          <p>Name: </p>
+          <p>Your order:<br/> <span id="pancakeDetails"></span></p>
+          <p>Price: <span id='totalPrice'>$5</span><span id='deliveryCost'></span></p>
+            
+          <button type="submit" id="saveOrder">Save order</button>
+          <button type='button' id="return">Return</button>
+        </div>
+
+        <div class="reply">
+          <p></p>
+        </div>
       </div>
-    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
