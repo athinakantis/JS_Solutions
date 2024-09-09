@@ -4,7 +4,7 @@ let basePrice = +document.querySelector('#type').value
 let toppingsPrice = 0;
 let deliveryCost = 0;
 let pancake = {pancakeBase: 'Classic', toppings: [], extras: []}
-let savedOrders = []
+const savedOrders = []
 const reply = document.querySelector('.reply')
 
 
@@ -54,8 +54,9 @@ function updatePrice() {
 //Show order
 const seeOrderBtn = document.querySelector('#seeOrder')
 const summaryDetails = document.querySelectorAll('.summary p')
-let customerName = document.querySelector('#customerName').value
+
 seeOrderBtn.addEventListener('click', () => {
+    let customerName = document.querySelector('#customerName').value
     document.querySelector('.summary').classList.toggle('hidden')
     document.querySelector('.customize').classList.toggle('hidden')
     document.querySelector('#nameDisplay').textContent = `Name: ${customerName}`
@@ -89,13 +90,15 @@ returnBtn.addEventListener('click', () => {
 //Saving order functionality
 const saveOrderBtn = document.querySelector('#saveOrder')
 saveOrderBtn.addEventListener('click', () => {
+    let customerName = document.querySelector('#customerName').value
+
     if (!customerName) {
         reply.firstChild.textContent = 'Please enter a name for your order!'
         reply.classList.toggle('hidden')
     } else {
         reply.firstChild.textContent = `Your order was successful! 🥳`
         reply.classList.toggle('hidden')
-        let order = {customerName: summaryDetails[0].textContent,
+        let order = {customerName: customerName,
             pancake: pancake,
             deliveryMethod: document.querySelector('input[name="delivery"]:checked').id
             }
@@ -103,5 +106,6 @@ saveOrderBtn.addEventListener('click', () => {
         savedOrders.push(order)
         console.log(savedOrders)
     }
+    setTimeout(() => reply.classList.toggle('hidden'), 2000)
 })
 
