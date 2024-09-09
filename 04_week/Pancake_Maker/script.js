@@ -5,7 +5,7 @@ let toppingsPrice = 0;
 let deliveryCost = 0;
 let pancake = {pancakeBase: 'Classic', toppings: [], extras: []}
 let savedOrders = []
-
+const reply = document.querySelector('.reply')
 
 
 /* Listening for changes in customization */
@@ -32,7 +32,7 @@ document.addEventListener('change', (e) => {
         e.target.checked ? toppingsPrice += +e.target.value : toppingsPrice -= +e.target.value
     } else if (e.target.name === 'delivery') {
         e.target.id === 'delivery' ? deliveryCost = 5 : deliveryCost = 0
-    }
+    } 
     updatePrice()
 })
 
@@ -54,12 +54,11 @@ function updatePrice() {
 //Show order
 const seeOrderBtn = document.querySelector('#seeOrder')
 const summaryDetails = document.querySelectorAll('.summary p')
+let customerName = document.querySelector('#customerName').value
 seeOrderBtn.addEventListener('click', () => {
-    console.log(document.querySelector('input[name="delivery"]:checked').id)
-
     document.querySelector('.summary').classList.toggle('hidden')
-    document.querySelector('.form-container').classList.toggle('hidden')
-    summaryDetails[0].textContent = `Name: ${document.querySelector('#customerName').value}`
+    document.querySelector('.customize').classList.toggle('hidden')
+    document.querySelector('#nameDisplay').textContent = `Name: ${customerName}`
 
     
     let formattedExtras = []
@@ -69,7 +68,7 @@ seeOrderBtn.addEventListener('click', () => {
     }
 
 
-    document.querySelector('#pancakeDetails').textContent = `${pancake.pancakeBase} pancake, Toppings: ${pancake.toppings.length > 0 ? pancake.toppings : 'None'}, Extras: ${pancake.extras.length > 0 ? formattedExtras : 'None'}`
+    document.querySelector('#orderDisplay').textContent = `${pancake.pancakeBase} pancake, Toppings: ${pancake.toppings.length > 0 ? pancake.toppings.join(', ') : 'None'}, Extras: ${pancake.extras.length > 0 ? formattedExtras.join(', ') : 'None'}`
  
 
     if (deliveryCost === 5) {
@@ -78,22 +77,31 @@ seeOrderBtn.addEventListener('click', () => {
 })
 
 
-
-//Saving order functionality
-const saveOrderBtn = document.querySelector('#saveOrder')
-saveOrderBtn.addEventListener('submit', () => {
-    let order = {customerName: summaryDetails[0].textContent,
-                pancake: pancake,
-                deliveryMethod: document.querySelector('input[name="delivery"]:checked').id
-    }
-    console.log(order)
-    savedOrders.push(order)
-})
-
-
 //Return to pancake customization
 const returnBtn = document.querySelector('#return')
 returnBtn.addEventListener('click', () => {
     document.querySelector('.summary').classList.toggle('hidden')
-    document.querySelector('.form-container').classList.toggle('hidden')
+    document.querySelector('.customize').classList.toggle('hidden')
 })
+
+
+
+//Saving order functionality
+const saveOrderBtn = document.querySelector('#saveOrder')
+saveOrderBtn.addEventListener('click', () => {
+    if (!customerName) {
+        reply.firstChild.textContent = 'Please enter a name for your order!'
+        reply.classList.toggle('hidden')
+    } else {
+        reply.firstChild.textContent = `Your order was successful! 🥳`
+        reply.classList.toggle('hidden')
+        let order = {customerName: summaryDetails[0].textContent,
+            pancake: pancake,
+            deliveryMethod: document.querySelector('input[name="delivery"]:checked').id
+            }
+        console.log(order)
+        savedOrders.push(order)
+        console.log(savedOrders)
+    }
+})
+

@@ -43,16 +43,16 @@ h2 {
 }
 
 /* Pancake Customization Styling*/
-.form-container {
+.customize {
   flex: 1;
   padding: 20px;
 }
 
-.form-container div {
+.customize div {
   margin: 20px 0;
 }
 
-.form-container div p{
+.customize div p{
   margin-bottom: 5px;
 }
 
@@ -96,7 +96,7 @@ input {
 /* Toggle Visibility */
 .hidden {
   display: none;
-}
+} 
 
 
 
@@ -121,9 +121,28 @@ button {
   border: 1px solid rgba(29, 24, 20, 0.8);
   border-radius: 15px;
   color: white;
-  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 1rem;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 #saveOrder {
   margin-right: 10px;
 }
+
+
+
+/* Form 'Validation' Reply */
+.reply {
+  background-color: rgba(90, 74, 66, 0.4);
+  backdrop-filter: blur(5px);
+  position: absolute;
+  margin: auto;
+  margin-top: 40vh;
+  padding: 40px;
+  border-radius: 5px;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 400;
+}
+

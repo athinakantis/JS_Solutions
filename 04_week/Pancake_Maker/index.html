@@ -12,7 +12,7 @@
         <img src="pancake.jpeg" alt="Delicious pancakes" />
         <div class="price-banner"><span id="totalPrice">$5</span></div>
       </div>
-      <div class="form-container">
+      <div class="customize">
         <h2>Customize Your Pancake</h2>
         <div class="customization-section">
           <label for="type">Choose your pancake type:</label>
@@ -54,15 +54,15 @@
 
         <div class="summary hidden">
           <h2>Your order summary:</h3>
-          <p>Name: </p>
-          <p>Your order:<br/> <span id="pancakeDetails"></span></p>
+          <p id='nameDisplay'>Name: </p>
+          <p>Your order:<br/> <span id="orderDisplay"></span></p>
           <p>Price: <span id='totalPrice'>$5</span><span id='deliveryCost'></span></p>
             
           <button type="submit" id="saveOrder">Save order</button>
           <button type='button' id="return">Return</button>
         </div>
 
-        <div class="reply">
+        <div class="reply hidden">
           <p></p>
         </div>
       </div>
