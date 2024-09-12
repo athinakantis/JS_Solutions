@@ -96,15 +96,14 @@ saveOrderBtn.addEventListener('click', () => {
         reply.firstChild.textContent = 'Please enter a name for your order!'
         reply.classList.toggle('hidden')
     } else {
-        reply.firstChild.textContent = `Your order was successful! 🥳`
-        reply.classList.toggle('hidden')
         let order = {customerName: customerName,
             pancake: pancake,
             deliveryMethod: document.querySelector('input[name="delivery"]:checked').id
             }
-        console.log(order)
+
         savedOrders.push(order)
-        console.log(savedOrders)
+        reply.firstChild.textContent = `Your order was successful! 🥳`
+        reply.classList.toggle('hidden')
     }
     setTimeout(() => reply.classList.toggle('hidden'), 2000)
 })

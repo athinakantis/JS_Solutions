@@ -30,3 +30,12 @@ function changeText() {
 }
 
 input.addEventListener('keyup', () => changeText())
+
+
+input.addEventListener('focus', () => {
+    document.body.style.backgroundColor = 'pink'
+})
+
+input.addEventListener('blur', () => {
+    document.body.style.backgroundColor = 'lavender'
+})
