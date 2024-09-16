@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+:root {
+  --accentcolor: #d17b49;
+}
+
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-weight: 200;
@@ -14,14 +18,19 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   line-height: 1.5;
 }
 
 
 /* Main content styling */
+h1 {
+  font-family: Josefin Sans;
+  font-weight: 200;
+}
+
 h2 {
   margin: 20px 0;
+  font-weight: 300;
 }
 
 .customization-container {
@@ -66,7 +75,7 @@ input {
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #d17b49;
+  background-color: var(--accentcolor);
   color: white;
   border-radius: 50%;
   width: 100px;
@@ -76,6 +85,10 @@ input {
   align-items: center;
   font-size: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.price-banner span {
+  font-size: 1.5em;
 }
 
 
@@ -119,7 +132,7 @@ input {
 /* Button Styling */
 button {
   padding: 10px 20px;
-  background-color: #d17b49;
+  background-color: var(--accentcolor);
   border: 1px solid rgba(29, 24, 20, 0.8);
   border-radius: 15px;
   color: white;
@@ -136,15 +149,157 @@ button {
 
 /* Form 'Validation' Reply */
 .reply {
-  background-color: rgba(90, 74, 66, 0.9);
+  text-align: center;
+  background-color: beige;
   backdrop-filter: blur(5px);
   position: absolute;
   margin: auto;
   margin-top: 40vh;
   padding: 30px;
   border-radius: 5px;
-  color: white;
+  color: rgba(29, 24, 20, 0.8);
   font-size: 1.2em;
   font-weight: 400;
 }
 
+
+
+
+/* 
+
+MEDIA QUERIES 
+
+*/
+
+
+
+/* iPad Pro */
+@media only screen and (max-width: 1024px) {
+  body {
+    font-size: 24px;
+    height: 120vh;
+  }
+
+  h2 {
+    border-bottom: 1px solid beige;
+  }
+
+  .image-container {
+    height: 100%;
+    flex: 1;
+  }
+
+  .image-container > img {
+    height: 100%;
+    object-position: 20% 0%;
+  }
+
+  .customization-container {
+    height: 100%;
+    width: 100%;
+  }
+
+  .customize {
+    position: absolute;
+    left: 10%;
+    top: 10%;
+    
+    background-color: rgba(0,0,0,0.3);
+    backdrop-filter: blur(4px);
+    color: beige;
+
+    padding: 40px 60px;
+  }
+
+
+  .summary {
+    position: absolute;
+    left: 10%;
+    top: 10%;
+    
+    background-color: rgba(0,0,0,0.3);
+    backdrop-filter: blur(4px);
+    color: beige;
+
+    padding: 40px 60px;
+  }
+
+  .summary > button {
+    margin: auto;
+  }
+
+  .price-banner {
+    z-index: 4;
+    top: 7%;
+    left: 64%;
+  }
+
+  .price-banner > span {
+    font-size: 2rem;
+  }
+
+  #seeOrder {
+    scale: 1.1;
+    display: block;
+    margin: auto;
+  }
+
+  input[type='checkbox'], input[type='radio'] {
+    scale: 1.3;
+    margin-right: 15px;
+  }
+
+  input[type='text'] {
+    position: relative;
+    top: -3px;
+    padding: 5px;
+    margin: 3px;
+  }
+
+
+
+}
+
+@media only screen and (max-width: 532px) {
+  body {
+    font-size: 22px;
+  }
+
+  .customize {
+    padding: 40px;
+  }
+
+  .price-banner {
+    top: 14%;
+  }
+}
+
+
+/* iPhone SE media query */
+@media only screen and (max-width: 375px) {
+  body {
+    font-size: 14px;
+  }
+
+  .customize {
+    width: 80%;
+    top: 5%;
+    padding: 15px;
+  }
+
+  .price-banner {
+    scale: 0.8;
+    top: 3%;
+    left: 80%;
+  }
+
+  .summary {
+    width: 80%;
+    top: 5%;
+    padding: 15px;
+  }
+
+  .reply {
+    width: 85%;
+  }
+}

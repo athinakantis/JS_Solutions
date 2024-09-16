@@ -8,6 +8,9 @@ const savedOrders = []
 const reply = document.querySelector('.reply')
 
 
+
+
+
 /* Listening for changes in customization */
 document.addEventListener('change', (e) => {
     if (e.target.id === 'type') {
@@ -15,7 +18,7 @@ document.addEventListener('change', (e) => {
         pancake.pancakeBase = e.target.selectedOptions[0].textContent.match(/[a-z]/gi).join('')
     } else if (e.target.name === 'topping') {
         if (e.target.checked) {
-            toppingsPrice ++
+            toppingsPrice++
             pancake.toppings.push(e.target.id)
         } else {
             toppingsPrice--
@@ -23,18 +26,18 @@ document.addEventListener('change', (e) => {
         }
     } else if (e.target.name === 'extra') {
         if (e.target.checked) {
-            toppingsPrice++
+            toppingsPrice += +e.target.value
             pancake.extras.push(e.target.id)
         } else {
-            toppingsPrice--
+            toppingsPrice -= e.target.value
             pancake.extras.filter((a) => a !== e.target.id)
         }
-        e.target.checked ? toppingsPrice += +e.target.value : toppingsPrice -= +e.target.value
     } else if (e.target.name === 'delivery') {
         e.target.id === 'delivery' ? deliveryCost = 5 : deliveryCost = 0
     } 
     updatePrice()
 })
+
 
 
 
@@ -80,31 +83,53 @@ seeOrderBtn.addEventListener('click', () => {
 
 //Return to pancake customization
 const returnBtn = document.querySelector('#return')
-returnBtn.addEventListener('click', () => {
+returnBtn.addEventListener('click', () => toggleSummary())
+
+function toggleSummary() {
     document.querySelector('.summary').classList.toggle('hidden')
     document.querySelector('.customize').classList.toggle('hidden')
-})
-
-
+}
 
 //Saving order functionality
 const saveOrderBtn = document.querySelector('#saveOrder')
 saveOrderBtn.addEventListener('click', () => {
     let customerName = document.querySelector('#customerName').value
 
+    //Customer has to enter a name for their order
     if (!customerName) {
+        reply.children[1].textContent = ''
         reply.firstChild.textContent = 'Please enter a name for your order!'
         reply.classList.toggle('hidden')
     } else {
-        let order = {customerName: customerName,
+        let order = {customerName: customerName.value,
             pancake: pancake,
-            deliveryMethod: document.querySelector('input[name="delivery"]:checked').id
+            deliveryMethod: document.querySelector('input[name="delivery"]:checked').id,
+            cost: `${basePrice + toppingsPrice + deliveryCost}`
             }
 
+    
+        console.log(order)
         savedOrders.push(order)
-        reply.firstChild.textContent = `Your order was successful! 🥳`
-        reply.classList.toggle('hidden')
-    }
-    setTimeout(() => reply.classList.toggle('hidden'), 2000)
-})
 
+        //Update 'reply' message on success
+        reply.firstChild.textContent = `Your order was successful! 🥳`
+        reply.children[1].textContent = `Thank you for supporting our local business!`
+        reply.classList.toggle('hidden')
+
+        //Removing current pancake/customer info
+        toppingsPrice = 0; deliveryCost = 0; basePrice = 5;
+        document.querySelector('#type').value = 5;
+        document.querySelectorAll('input[name="topping"], input[name="extra"]').forEach((topping) => {
+            topping.checked = false
+        })
+        document.querySelector('#eatIn').checked = true;
+        document.querySelector('#customerName').value = ''
+        pancake = {pancakeBase: 'Classic', toppings: [], extras: []}
+    }
+    
+    setTimeout(() => {
+        updatePrice()
+        reply.classList.toggle('hidden')
+        toggleSummary()
+    }, 3000)
+})
