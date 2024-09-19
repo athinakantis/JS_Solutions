@@ -1,4 +1,6 @@
 
+
+/* General Styling */
 * {
     margin: 0;
     padding: 0;
@@ -8,29 +10,70 @@
 body {
     font-family: Arial, Helvetica, sans-serif;   
     font-size: 18px;
-    width: 80%;
+    width: 100%;
     margin: auto;
     color: var(--darkgrey);
 }
 
 :root {
     --darkgrey: #2c2c2c;
-    --themeColour: #d7e1e6;
+    --themeColour: #c3d4dd;
+}
+
+
+
+
+/* Header Styling */
+header {
+    display: flex;
 }
 
 h1 {
-    margin-top: 50px;
+    margin: 5px 0 0 10px;
+    display: inline;
+}
+
+h1, h2, h3 {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 500;
 }
 
 h2 {
     margin: 0 0 20px;
 }
 
+h3 {
+    margin: 0 0 10px;
+}
 
 
-/* Table Styling */
+
+
+/* 
+
+Main Content Styling 
+
+*/
+.contentContainer {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+
+
+
+/* 
+
+Table Styling 
+
+*/
+
 .listings {
-    width: 500px;
+    width: 700px;
     padding: 20px;
     margin: 40px 0;
     background-color: var(--themeColour);
@@ -40,8 +83,11 @@ table {
     border-collapse: collapse;
 }
 
+
 thead {
     background-color: rgb(255, 255, 255);
+    text-align: center;
+    font-weight: bold;
 }
 
 td {
@@ -52,19 +98,53 @@ td {
 
 
 
+/* 
 
+Search Form Styling 
 
-
-
-
-/* Form Styling */
-.newListing {
-    padding: 20px;
-    background: var(--themeColour);
-    width: 500px;
+*/
+.searchContainer > form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
 }
 
-form {
+
+.searchContainer > form button {
+    width: max-content;
+    padding: 5px;
+}
+
+
+.searchContainer > form > div {
+    display: flex;
+    gap: 5px;
+}
+
+.searchContainer > .reply {
+    margin: 10px 0 20px;
+}
+
+#searchbar {
+    margin: 0;
+}
+
+
+
+
+/* 
+
+New Listing Form Styling 
+
+*/
+.newListingContainer {
+    margin-top: 40px;
+    padding: 20px;
+    background: var(--themeColour);
+    width: 700px;
+}
+
+#newListing {
     display: grid;
     grid-template-columns: 50% 50%;
 }
@@ -79,8 +159,10 @@ input, select {
     margin: 0 0 5px;
 }
 
-.newListing > input[type='button'] {    
+#newListing [type='submit'] {    
     padding: 10px;
     margin: 20px auto 0px;
-    display: block;
+
+    grid-column: span 2;
 }
+

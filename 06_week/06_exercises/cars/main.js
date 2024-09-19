@@ -25,56 +25,82 @@ class Car {
 /* Loop through car array to display listings */
 function initiateListings() {
     cars.forEach((car) => {
-        let tr = document.createElement('tr')
-        for (let i = 0; i < Object.keys(car).length; i++) {
-            let td = document.createElement('td')
-            td.textContent = Object.values(car)[i]
-            tr.appendChild(td)
-        }
-        document.querySelector('tbody').appendChild(tr)
+        updateListings(car)
     })
 }
+
 initiateListings()
 
 
 
+// Add event listeners to form instead of the button
+const newListingForm = document.querySelector('#newListing')
+const searchForm = document.querySelector('#searchForm')
 
 
 /* Listen for any new listings */
-document.querySelector('#createListing').addEventListener('click', () => {
-    let newCar = new Car(document.querySelector('#licensePlate').value,
-                        document.querySelector('#maker').value,
-                        document.querySelector('#model').value,
-                        document.querySelector('#customerName').value,
-                        document.querySelector('#price').value,
-                        document.querySelector('#color').value)
+newListingForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const reply = document.querySelector('.newListingContainer > p')
+
+    for (let input of e.target) {
+        if (input.value.length < 1) {
+            reply.textContent = `Please fill in all fields!`
+            return setTimeout(() => reply.textContent = '', 3000)
+
+        } else if (e.target[1].value == 0) {
+            e.target[1].focus()
+            reply.textContent = `Please select a car maker`
+            return setTimeout(() => reply.textContent = '', 3000)
+        }
+    }
+
+    const newCar = new Car(e.target[0].value,
+                        e.target[1].value,
+                        e.target[2].value,
+                        e.target[3].value,
+                        e.target[4].value,
+                        e.target[5].value)
     
     cars.push(newCar)
     updateListings(newCar)
+    reply.textContent = `Your new listing has been created!`
+    setTimeout(() => reply.textContent = '', 3000)
 })
 
 function updateListings(car) {
-    let tr = document.createElement('tr')
-    for (let i = 0; i < Object.keys(car).length; i++) {
-        let td = document.createElement('td')
+    const tbody = document.querySelector('tbody')
+    const tr = tbody.insertRow(-1)
+    for (let i = 0; i < 6; i++) {
+        const td = tr.insertCell()
         td.textContent = Object.values(car)[i]
-        tr.appendChild(td)
     }
-    document.querySelector('tbody').appendChild(tr)
 }
 
 
 
 /* Search functionality */
-document.querySelector('#search').addEventListener('click', () => {
-    let searchValue = document.querySelector('#searchbar').value
-    if (searchValue !== 6) {
-        document.querySelector('.reply').textContent = `Error: Please enter a valid license plate number. (6 letters and/or digits)`
+searchForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const searchValue = e.target[0].value
+    const reply = document.querySelector('.reply')
+    const regex = new RegExp(/^[A-Za-z]{3}\d{3}$/)
+
+
+    if (!regex.test(searchValue)) {
+        reply.textContent = `Error: Please enter a valid license plate number. (3 letters followed by 3 numbers)`
+        return setTimeout(() => reply.textContent = '', 3000)
     }
 
-    for (let car of cars) {
-        if (car.licensePlate === searchValue) {
-            document.querySelector('.reply').textContent = `Car found: ${car.maker} ${car.model} listed by ${car.owner}`
-        }
+
+    const car = cars.find((car) => car.licensePlate === searchValue)
+
+    if (car) {
+        return reply.textContent = `Car found: ${car.maker} ${car.model} listed by ${car.owner}`
+    } else {
+        reply.textContent = `No car with license plate ${searchValue} found. Check spelling and try again`
+        return setTimeout(() => reply.textContent = '', 3000)
+    
     }
 })
+

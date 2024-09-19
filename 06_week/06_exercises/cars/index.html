@@ -8,58 +8,69 @@
 </head>
 <body>
     <main>
-        <h1>Need For Wheels</h1>
-        <div class="listings">
-            <h2>Car listings</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <td>License Plate</td>
-                        <td>Maker</td>
-                        <td>Model</td>
-                        <td>Owner</td>
-                        <td>Price</td>
-                        <td>Color</td>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+        <header>
+            <h1>Need For Wheels</h1>
+        </header>
+
+        <div class="contentContainer">
+            <div class="listings">
+                <h2>Car listings</h2>
+    
+                <div class='searchContainer'>
+                    <form id='searchForm'>
+                        <label for="searchbar">Search listings</label>
+                        <div>
+                            <input type="text" id='searchbar' name='search'>
+                            <button type="submit" value="search" id='search'>Search</button>
+                        </div>
+                    </form>
+                    <p class="reply"></p>
+                </div>
+                <h3>All listings</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>License Plate</td>
+                            <td>Maker</td>
+                            <td>Model</td>
+                            <td>Owner</td>
+                            <td>Price</td>
+                            <td>Color</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+    
+    
+            <div class="newListingContainer">
+                <h2>Your car details</h2>
+                <form id='newListing'>
+                    <label for="licensePlate">License Plate</label>
+                    <input type="text" id='licensePlate'>
+                    <label for="maker">Maker</label>
+                    <select name="maker" id="maker">
+                        <option value="0">Select a car</option>
+                        <option value="Toyota">Toyota</option>
+                        <option value="Hyundai">Hyundai</option>
+                        <option value="Kia">KIA</option>
+                        <option value="TESLA">TESLA</option>
+                    </select>
+                    <label for="model">Car model</label>
+                    <input type="text" id='model'>
+                    <label for="customerName">Owner</label>
+                    <input type="text" id='customerName'>
+                    <label for="price">Price</label>
+                    <input type="number" name="price" id="price">
+                    <label for="color">Color</label>
+                    <input type="text" id='color'>
+                    <button type="submit" value="Create listing">Create Listing</button>
+                </form>
+                <p></p>
+            </div>
         </div>
 
-
-
-        <div>
-            <label for="searchbar">Search</label>
-            <input type="text" id='searchbar' name='search'>
-            <input type="button" value="search" id='search'>
-            <p class="reply"></p>
-        </div>
-
-
-
-        <div class="newListing">
-            <h2>Your car details</h2>
-            <form action="/">
-                <label for="licensePlate">License Plate</label>
-                <input type="text" id='licensePlate'>
-                <label for="maker">Maker</label>
-                <select name="maker" id="maker">
-                    <option value="toyota">Toyota</option>
-                    <option value="hyundai">Hyundai</option>
-                    <option value="kia">KIA</option>
-                </select>
-                <label for="model">Car model</label>
-                <input type="text" id='model'>
-                <label for="customerName">Owner</label>
-                <input type="text" id='customerName'>
-                <label for="price">Price</label>
-                <input type="number" name="price" id="price">
-                <label for="color">Color</label>
-                <input type="text" id='color'>
-            </form>
-            <input type="button" id='createListing' value="Create listing">
-        </div>
     </main>
 
     <script src='main.js'></script>
