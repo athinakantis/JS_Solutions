@@ -5,17 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pancake Co™ - Your local pancake parlor</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="shortcut icon" href="pancake_favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="images/pancake_favicon.png" type="image/x-icon">
   </head>
   
   <body>
+    <header>
+      <h1>Pancake Co™</h1>
+      <div class='cart'>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M5.79166 2H1V4H4.2184L6.9872 16.6776H7V17H20V16.7519L22.1932 7.09095L22.5308 6H6.6552L6.08485 3.38852L5.79166 2ZM19.9869 8H7.092L8.62081 15H18.3978L19.9869 8Z" fill="currentColor"/>
+          <path d="M10 22C11.1046 22 12 21.1046 12 20C12 18.8954 11.1046 18 10 18C8.89543 18 8 18.8954 8 20C8 21.1046 8.89543 22 10 22Z" fill="currentColor"/>
+          <path d="M19 20C19 21.1046 18.1046 22 17 22C15.8954 22 15 21.1046 15 20C15 18.8954 15.8954 18 17 18C18.1046 18 19 18.8954 19 20Z" fill="currentColor"/>
+        </svg>
+      </div>
+    </header>
     <div class="customization-container">
       <div class="image-container">
-        <img src="pancake.jpeg" alt="Delicious pancakes" />
+        <img src="images/monika-grabkowska-jsgJtBOR6jY-unsplash.jpg" alt="Delicious pancakes" />
         <div class="price-banner"><span id="totalPrice">$5</span></div>
       </div>
       <div class="customize">
-        <h1>Pancake Co™</h1>
         <h2>Customize Your Pancake</h2>
         <div class="customization-section">
           <label for="type">Choose your pancake type:</label>
@@ -27,26 +36,53 @@
         </div>
         <div class="customization-section">
           <p>Select your toppings ($1 each):</p>
-          <input type="checkbox" name='topping' id="Nuts" value="1" />Nuts<br />
-          <input type="checkbox" name='topping' id="Bananas" value="1" />Bananas<br />
-          <input type="checkbox" name='topping' id="Syrup" value="1" />Syrup<br />
+          <div>
+            <input type="checkbox" name='topping' id="Nuts" value="1" />
+            <label for='Nuts'>Nuts</label>
+          </div>
+          <div>
+            <input type="checkbox" name='topping' id="Bananas" value="1" />
+            <label for='Bananas'>Bananas</label><br>
+          </div>
+          <div>
+            <input type="checkbox" name='topping' id="Syrup" value="1" />
+            <label for='Syrup'>Syrup</label>
+          </div>
+ 
+
+
         </div>
         <div class="customization-section">
           <p>Add extras:</p>
-          <input type="checkbox" name='extra' id="Whipped" value="2" />Whipped Cream -
-          $2<br />
-          <input type="checkbox" name='extra' id="Ice" value="3" />Ice Cream - $3<br />
+          <div>
+            <input type="checkbox" name='extra' id="Whipped" value="2" />
+            <label for='Whipped'>Whipped Cream - $2</label>
+          </div>
+          <div>
+            <input type="checkbox" name='extra' id="Ice" value="3" />
+            <label for='Ice'>Ice cream - $3</label>
+          </div>
+
         </div>
 
 
         <div class="order-details">
           <label for="customerName">Name:</label>
-          <input type="text" id='customerName' required /><br/>
+          <input type="text" id='customerName' required />
 
-          <label for="delivery">Delivery option:</label><br/>
-          <input type="radio" name="delivery" id="eatIn" checked>Eat in<br/>
-          <input type="radio" name="delivery" id="pickUp">Pick up<br/>
-          <input type="radio" name="delivery" id="delivery">Delivery<br/>
+          <p>Delivery Option:</p>
+          <div>
+            <input type="radio" name="delivery" id="eatIn" checked>
+            <label for='eatIn'>Eat in</label>
+          </div>
+          <div>
+            <input type="radio" name="delivery" id="pickUp">
+            <label for='pickUp'>Pick up</label>
+          </div>
+          <div>
+            <input type="radio" name="delivery" id="delivery">
+            <label for='delivery'>Delivery</label>
+          </div>
         </div>
 
         <div class="price-display">
@@ -70,6 +106,10 @@
           <p></p>
         </div>
       </div>
+
+      <footer>
+        <p>Copyright &copy 2024 Pancake Co &trade;</p>
+      </footer>
 
     <script src="script.js"></script>
   </body>

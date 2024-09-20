@@ -16,15 +16,20 @@ body {
   background-color: #fff8f0;
   color: #5a4a42;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
   line-height: 1.5;
 }
 
 
+
+/* Header Styling */
+
+
+
 /* Main content styling */
 h1 {
-  font-family: Josefin Sans;
+  font-family: Josefin Sans, Arial, sans-serif;
   font-weight: 200;
 }
 
@@ -37,7 +42,6 @@ h2 {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  width: 80%;
 }
 
 .image-container {
@@ -58,7 +62,7 @@ h2 {
   padding: 20px;
 }
 
-.customize div {
+.customize > div {
   margin: 20px 0;
 }
 
@@ -66,13 +70,24 @@ h2 {
   margin-bottom: 5px;
 }
 
+select {
+  color: rgb(55, 55, 55);
+  padding: 3px;
+  font-size: 1em;
+  margin: 0 6px;
+}
+
 input {
+  color: rgb(55, 55, 55);
+  padding: 3px;
   margin: 5px;
+  outline: none;
+  font-size: 1em;
 }
 
 .price-banner {
   position: absolute;
-  top: 20px;
+  top: 30px;
   left: 50%;
   transform: translateX(-50%);
   background-color: var(--accentcolor);
@@ -87,21 +102,19 @@ input {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.price-banner span {
-  font-size: 1.5em;
+.price-banner > span {
+  font-size: 2em;
 }
 
 
 /* Animation */
 @keyframes bounce {
-  0% {}
   50% {transform: translateY(-5px)}
   100% {transform: translateY(0)}
 }
 
 .bounce {
-  animation-name: bounce;
-  animation-duration: 500ms;
+  animation: bounce 500ms;
 }
 
 
@@ -141,6 +154,11 @@ button {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+button:hover {
+  cursor: pointer;
+  background-color: #876959;
+}
+
 #saveOrder {
   margin-right: 10px;
 }
@@ -162,6 +180,18 @@ button {
   font-weight: 400;
 }
 
+ 
+/* Footer Styling */
+footer {
+  position: absolute;
+  bottom: 0;
+}
+footer p{
+  text-align: end;
+}
+
+
+
 
 
 
@@ -181,7 +211,7 @@ MEDIA QUERIES
   }
 
   h2 {
-    border-bottom: 1px solid beige;
+    border-bottom: 1px solid;
   }
 
   .image-container {
@@ -190,6 +220,8 @@ MEDIA QUERIES
   }
 
   .image-container > img {
+    box-shadow: none;
+    position: absolute;
     height: 100%;
     object-position: 20% 0%;
   }
@@ -199,30 +231,17 @@ MEDIA QUERIES
     width: 100%;
   }
 
-  .customize {
+  .customize, .summary {
     position: absolute;
-    left: 10%;
     top: 10%;
     
-    background-color: rgba(0,0,0,0.3);
-    backdrop-filter: blur(4px);
-    color: beige;
+    background-color: rgba(245,245,220, 0.8);
+    backdrop-filter: drop-shadow(10px);
 
     padding: 40px 60px;
   }
 
 
-  .summary {
-    position: absolute;
-    left: 10%;
-    top: 10%;
-    
-    background-color: rgba(0,0,0,0.3);
-    backdrop-filter: blur(4px);
-    color: beige;
-
-    padding: 40px 60px;
-  }
 
   .summary > button {
     margin: auto;
@@ -231,7 +250,7 @@ MEDIA QUERIES
   .price-banner {
     z-index: 4;
     top: 7%;
-    left: 64%;
+    left: 80%;
   }
 
   .price-banner > span {
@@ -244,7 +263,15 @@ MEDIA QUERIES
     margin: auto;
   }
 
-  input[type='checkbox'], input[type='radio'] {
+  select {
+    font-size: 0.8em;
+    padding: 6px;
+    margin: 0 6px;
+    border-radius: 5px;
+  }
+
+  input[type='checkbox'], 
+  input[type='radio'] {
     scale: 1.3;
     margin-right: 15px;
   }
@@ -252,15 +279,19 @@ MEDIA QUERIES
   input[type='text'] {
     position: relative;
     top: -3px;
-    padding: 5px;
-    margin: 3px;
+    padding: 3px;
+    margin: 10px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--accentcolor)
   }
 
 
 
 }
 
-@media only screen and (max-width: 532px) {
+@media only screen and (max-width: 750px) {
+  
+
   body {
     font-size: 22px;
   }
@@ -270,13 +301,13 @@ MEDIA QUERIES
   }
 
   .price-banner {
-    top: 14%;
+    left: 80%;
   }
 }
 
 
 /* iPhone SE media query */
-@media only screen and (max-width: 375px) {
+@media only screen and (max-width: 500px) {
   body {
     font-size: 14px;
   }
@@ -303,3 +334,4 @@ MEDIA QUERIES
     width: 85%;
   }
 }
+
