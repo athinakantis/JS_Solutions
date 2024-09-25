@@ -3,30 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Need for Wheels</title>
+    <title>Huberman Auto</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <main>
         <header>
-            <h1>Need For Wheels</h1>
+            <h1>Huberman Auto</h1>
+            <nav>
+                <ul>
+                    <li id='menuIcon'>
+                        <img src="images/menu-burger.png" alt="">
+                    </li>
+
+                    <div>
+                        <li id='createListing' class='dropdown'>Create new listing</li>
+                        <li id='browseCatalogue' class='dropdown'>Browse catalogue</li>
+                        <li id='browseListings' class='dropdown'>Browse listings</li>
+                        <li id='ourServices' class='dropdown'>Our Services</li>
+                    </div>
+                </ul>
+            </nav>
         </header>
+
+        <div class="heroBanner">
+            <img src="/images/jon-flobrant-lRSChvh1Mhs-unsplash.jpg">
+        </div>
 
         <div class="contentContainer">
             <div class="listings">
-                <h2>Car listings</h2>
-    
-                <div class='searchContainer'>
-                    <form id='searchForm'>
-                        <label for="searchbar">Search listings</label>
-                        <div>
-                            <input type="text" id='searchbar' name='search'>
-                            <button type="submit" value="search" id='search'>Search</button>
-                        </div>
-                    </form>
-                    <p class="reply"></p>
+                <div class='listings-header'>
+                    <h2>Browse our listings</h2>
+
+                    <svg id='searchIcon' xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#2c2c2c"><path d="M380-320q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l224 224q11 11 11 28t-11 28q-11 11-28 11t-28-11L532-372q-30 24-69 38t-83 14Zm0-80q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
                 </div>
-                <h3>All listings</h3>
+
+
                 <table>
                     <thead>
                         <tr>
@@ -34,44 +46,115 @@
                             <td>Maker</td>
                             <td>Model</td>
                             <td>Owner</td>
-                            <td>Price</td>
+                            <td>Year</td>
                             <td>Color</td>
+                            <td>Price</td>
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
             </div>
+
+
+            <div class='searchContainer hidden'>
+                <div class="search-header">
+                    <h2>Search listings</h2>
+                    <svg id='returnIcon' xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#2c2c2c"><path d="M320-200q-17 0-28.5-11.5T280-240q0-17 11.5-28.5T320-280h244q63 0 109.5-40T720-420q0-60-46.5-100T564-560H312l76 76q11 11 11 28t-11 28q-11 11-28 11t-28-11L188-572q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l144-144q11-11 28-11t28 11q11 11 11 28t-11 28l-76 76h252q97 0 166.5 63T800-420q0 94-69.5 157T564-200H320Z"/></svg>
+                </div>
+
+                <form id='searchForm'>
+
+                    <div class="filterContainer">
+                        <label>Filter by:</label>
+                        <input type="checkbox" name="filter" id="filterLicense">
+                        <label for="filterLicense">License Plate</label>
+                        <input type="checkbox" name="filter" id="filterYear">
+                        <label for="filterYear">Discounted Cars</label>
+                    </div>
+                    
+                    <div class='searchBar'>
+                        <input type="text" id='searchbar' name='search' required>
+                        <button type="submit" value="search" id='search'>Search</button>
+                    </div>
+                </form>
+
+                <div class='searchResults hidden'>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>License Plate</td>
+                                <td>Maker</td>
+                                <td>Model</td>
+                                <td>Owner</td>
+                                <td>Year</td>
+                                <td>Color</td>
+                                <td>Price</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
     
     
             <div class="newListingContainer">
-                <h2>Your car details</h2>
+                <h2>Create new listing </h2>
                 <form id='newListing'>
                     <label for="licensePlate">License Plate</label>
-                    <input type="text" id='licensePlate'>
+                    <input type="text" id='licensePlate' pattern='^[A-Za-z]{3}\d{3}$' required>
                     <label for="maker">Maker</label>
-                    <select name="maker" id="maker">
-                        <option value="0">Select a car</option>
+                    <select name="maker" id="maker" required>
+                        <option value="Default">Select a maker</option>
                         <option value="Toyota">Toyota</option>
                         <option value="Hyundai">Hyundai</option>
-                        <option value="Kia">KIA</option>
+                        <option value="KIA">KIA</option>
                         <option value="TESLA">TESLA</option>
                     </select>
-                    <label for="model">Car model</label>
-                    <input type="text" id='model'>
+                    <label for='model'>Model</label>
+                    <select name="model" id="model" required>
+                        <option value="Default">Model</option>
+                        <optgroup label='Toyota' class='hidden'>
+                            <option value="Crown">Crown</option>
+                            <option value="Corolla">Corolla</option>
+                            <option value="Camry">Camry</option>
+                            <option value="GR Supra">GR Supra</option>
+                        </optgroup>
+                        <optgroup label='Hyundai' class='hidden'>
+                            <option value="IONIC 6">IONIC 6</option>
+                            <option value="Santa Fe Hybrid">Santa Fe Hybdrid</option>
+                            <option value="NEXO">NEXO</option>
+                        </optgroup>
+                        <optgroup label='KIA' class='hidden'>
+                            <option value="NIRO">NIRO</option>
+                            <option value="Stinger">Stinger</option>
+                            <option value="RIO">RIO</option>
+                        </optgroup>
+                        <optgroup label='TESLA' class='hidden'>
+                            <option value="Model S">Model S</option>
+                            <option value="Model Y">Model Y</option>
+                            <option value="Model X">Model X</option>
+                        </optgroup>
+                    </select>
                     <label for="customerName">Owner</label>
-                    <input type="text" id='customerName'>
-                    <label for="price">Price</label>
-                    <input type="number" name="price" id="price">
+                    <input type="text" id='customerName' minlength='3' pattern='^[A-Za-z ]{3,}$' required>
+                    <label for='year'>Year</label>
+                    <input required type="text" min='1886' id='year'>
                     <label for="color">Color</label>
-                    <input type="text" id='color'>
+                    <input required type="text" id='color'>
+                    <label for="price">Price</label>
+                    <input required type="number" name="price" min='1' id="price">
+                    <p class='reply' id='newListingsReply'></p>
                     <button type="submit" value="Create listing">Create Listing</button>
                 </form>
-                <p></p>
             </div>
         </div>
 
     </main>
+    <footer>
+
+    </footer>
 
     <script src='main.js'></script>
 </body>

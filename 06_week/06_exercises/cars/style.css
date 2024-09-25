@@ -9,43 +9,114 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;   
-    font-size: 18px;
     width: 100%;
     margin: auto;
-    color: var(--darkgrey);
 }
 
 :root {
+    --font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --white: white;
     --darkgrey: #2c2c2c;
-    --themeColour: #c3d4dd;
+    --lightgrey: #dadada;
+    --accentColour: #89571a;
+    --hoverAccent: #f6b466;
+    --themeColour: hsl(33, 89%, 85%);
 }
+
 
 
 
 
 /* Header Styling */
 header {
+    background-color: white;
     display: flex;
+    align-items: center;
+    height: 40px;
 }
 
+
+/* Font Styling */
 h1 {
-    margin: 5px 0 0 10px;
+    font-size: 1.4em;
+    margin: 5px 15px 0 10px;
     display: inline;
+    align-self: flex-start;
 }
 
 h1, h2, h3 {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: var(--font);
     font-weight: 500;
 }
 
 h2 {
-    margin: 0 0 20px;
+    font-weight: 100;
 }
 
 h3 {
     margin: 0 0 10px;
 }
 
+p, input, select, button {
+    font-family: var(--font2);
+    font-weight: 500;
+}
+
+
+
+
+
+/* Nav Styling */
+nav ul {
+    position: absolute;
+    top: 5px;
+    list-style-type: none;
+}
+
+#menuIcon>img:hover {
+    cursor: pointer;
+}
+
+#menuIcon img {
+    width: 25px;
+    margin-top: 2px;
+    padding: 5px;
+}
+
+nav ul div {
+    scale: 0;
+    font-size: 0.8em;
+    background-color: white;
+    position: relative;
+    top: 3px;
+}
+
+nav ul div li {
+    padding: 15px;
+    transition: background-color 200ms;
+}
+
+nav ul div li:hover {
+    background-color: var(--hoverAccent)
+}
+
+
+
+
+
+/* Hero Banner Styling */
+.heroBanner {
+    width: 100vw;
+    max-height: 737px;
+    overflow: hidden;
+    margin-bottom: 50px;
+}
+
+.heroBanner img {
+    height: 737px;
+    object-fit: cover;
+    width: 100%;
+}
 
 
 
@@ -55,45 +126,74 @@ Main Content Styling
 
 */
 .contentContainer {
-    width: 80%;
     margin: auto;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 60% 40%;
+    width: 80%;
+    gap: 10px;
+}
+
+.contentContainer h2 {
+    margin: 0 0 40px;
 }
 
 
 
 
 
-/* 
 
-Table Styling 
+/* Table Styling */
+.listings-header {
+    display: flex;
+    justify-content: space-between;
+}
 
-*/
+.listings h2 {
+    color: var(--darkgrey);
+    width: max-content;
+}
+
+#searchIcon:hover {
+    cursor: pointer;
+}
 
 .listings {
-    width: 700px;
+    border: 1px solid var(--lightgrey);
     padding: 20px;
-    margin: 40px 0;
-    background-color: var(--themeColour);
 }
 
 table {
     border-collapse: collapse;
+    margin: 0 0 40px;
+    width: 100%;
 }
 
 
 thead {
-    background-color: rgb(255, 255, 255);
-    text-align: center;
-    font-weight: bold;
+}
+
+thead td {
+    text-align: start;
 }
 
 td {
-    border: 1px solid grey;
+    font-size: 0.8em;
+    border: 1px solid var(--lightgrey);
     padding: 7px 9px;
 }
+
+
+
+td.hasDiscount:after {
+    content: '-15%';
+    background-color: green;
+    color: white;
+    padding: 2px;
+    border-radius: 3px;
+    text-align: end;
+    margin-left: 5px;
+}
+
 
 
 
@@ -103,33 +203,58 @@ td {
 Search Form Styling 
 
 */
-.searchContainer > form {
-    display: flex;
-    flex-direction: column;
-    max-width: 300px;
+.search-header {
+ display: flex;
+ justify-content: space-between;
+}
+
+#returnIcon:hover {
+    cursor: pointer;
 }
 
 
-.searchContainer > form button {
-    width: max-content;
-    padding: 5px;
+.searchContainer {
+    grid-column: 1;
+    border: 1px solid var(--lightgrey);
+    padding: 20px;
+}
+
+.searchContainer input[type='text'] {
+    width: 60%;
+}
+
+.searchContainer button {
+    padding: 6px;
+}
+
+.searchBar {
+    display: flex;
 }
 
 
 .searchContainer > form > div {
-    display: flex;
     gap: 5px;
 }
 
 .searchContainer > .reply {
-    margin: 10px 0 20px;
+    font-size: 0.9em;
+    font-weight: lighter;
+    margin: 20px 0;
 }
 
 #searchbar {
+    max-width: 275px;
     margin: 0;
 }
 
+.filterContainer {
+    margin: 0 0 7px;
+    font-size: 0.8em;
+}
 
+.filterContainer label {
+    margin: 0 15px 0 0;
+}
 
 
 /* 
@@ -138,10 +263,10 @@ New Listing Form Styling
 
 */
 .newListingContainer {
-    margin-top: 40px;
+    grid-column: 2;
+    background-color: var(--white);
     padding: 20px;
-    background: var(--themeColour);
-    width: 700px;
+    border: 1px solid var(--lightgrey);
 }
 
 #newListing {
@@ -166,3 +291,18 @@ input, select {
     grid-column: span 2;
 }
 
+.newListingContainer .reply {
+    grid-column: span 2;
+    margin: 20px 0;
+}
+
+.hidden {
+    display: none;
+}
+
+
+
+/* Footer Styling */
+footer {
+    height: 50vh;
+}
