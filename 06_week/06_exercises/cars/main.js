@@ -1,33 +1,32 @@
 
-const licensePlateRegex = new RegExp(/^[A-Za-z]{3}\d{3}$/)
-const thisYear = new Date().getFullYear()
+const licensePlateRegex = new RegExp(/^[A-Za-z]{3}\d{3}$/);
+const thisYear = new Date().getFullYear();
 
 
-const newName = document.querySelector('#customerName')
-const newLicense = document.querySelector('#licensePlate')
-const newMaker = document.querySelector('#maker')
-const newModel = document.querySelector('#model')
-const newColor = document.querySelector('#color')
-const newYear = document.querySelector('#year')
-const newPrice = document.querySelector('#price')
+const newName = document.querySelector('#customerName');
+const newLicense = document.querySelector('#licensePlate');
+const newMaker = document.querySelector('#maker');
+const newModel = document.querySelector('#model');
+const newColor = document.querySelector('#color');
+const newYear = document.querySelector('#year');
+const newPrice = document.querySelector('#price');
 
-const searchReply = document.querySelector('#searchReply')
-const newListingsReply = document.querySelector('#newListingsReply')
+const searchReply = document.querySelector('#searchReply');
+const newListingsReply = document.querySelector('#newListingsReply');
 
+const tableBody = document.querySelector('#listingsTable tbody');
 
-const listingsTable = document.querySelector('.listings tbody')
-const searchTable = document.querySelector('.searchResults tbody')
-
+let currentTimeout;
 
 //Makes sure the max attribute of year input is set to the current year
-newYear.setAttribute('max', thisYear)
+newYear.setAttribute('max', thisYear);
 
 
 
 
-
-/* Car class and array */
-const cars = []
+// Car class
+// And cars array
+const cars = [];
 
 class Car {
     constructor(licensePlate, maker, model, owner, year, color, price) {
@@ -41,173 +40,295 @@ class Car {
     } 
 
     discountPrice() {
-        return this.price * 0.85
+        const discountRate = 0.15;
+        return this.price * (1 - discountRate);
     }
 
 }
 
 //Example Cars
-cars.push(new Car('ABC123', 'Toyota', 'Corolla', 'John Doe', 2024, 'Midnight Blue', 5000))
-cars.push(new Car('ZZZ999', 'Hyundai', 'IONIC 6', 'Jane Doe', 2000, 'Red', 4000))
+cars.push(new Car('ABC123', 'Toyota', 'Corolla', 'John Doe', 2024, 'Midnight Blue', 5000));
+cars.push(new Car('ZZZ999', 'Hyundai', 'IONIC 6', 'Jane Doe', 2000, 'Red', 4000));
 
 
-initiateListings(cars)
+initiateListings(cars);
 
 
 
 
-function validateName() {
-    let customerName = newName.value
-    return customerName.trim()
-}
 
 
 newLicense.addEventListener('input', () => {
     if (newLicense.validity.patternMismatch) {
-        newLicense.setCustomValidity('Please enter a license plate in the following format: ABC123')
+        newLicense.setCustomValidity('Please enter a license plate in the following format: ABC123');
     } else {
-        newLicense.setCustomValidity('')
+        newLicense.setCustomValidity('');
+    }
+})
+
+
+newColor.addEventListener('input', () => {
+    if (newColor.validity.patternMismatch) {
+        newColor.setCustomValidity('Color name shouldn`t include any digits or special characters')
+    } else {
+        newColor.setCustomValidity('')
     }
 })
 
 
 let modelFilter;
+const optgroups = document.querySelectorAll('optgroup')
 newMaker.addEventListener('change', (e) => {
-    e.preventDefault()
-    const modeldropdown = Array.from(document.querySelectorAll('optgroup'))
+    e.preventDefault();
+    const modeldropdown = Array.from(optgroups);
     if (modelFilter) {
-        modelFilter.classList.toggle('hidden')
+        modelFilter.classList.toggle('hidden');
     }
-    modelFilter = modeldropdown.find((category) => category.label === newMaker.value)
-    modelFilter.classList.toggle('hidden')
+    modelFilter = modeldropdown.find((category) => category.label === newMaker.value);
+    modelFilter.classList.toggle('hidden');
 })
 
 function validateLicense() {
-    return newLicense = newLicense.toUpperCase()
+    const license = newLicense.value.toUpperCase();
+
+    if (cars.find((car) => car.licensePlate === license)) {
+        throw new Error(`A car with this license plate already exists in our system. Make sure you've entered the correct license.`);
+    } else if (!licensePlateRegex.test(license)) {
+        throw new Error('Please enter a license plate in the following format: ABC123')
+    }
+    return license;
 }
 
-function showMessage(replyField, message) {
-    replyField.textContent = message
-    setTimeout(() => replyField.textContent = '', 3000)
+function validateName() {
+    let customerName = newName.value;
+    customerName = customerName.trim()
+    if (customerName.length < 3) {
+        throw new Error('Please enter a name more than 3 characters :)')
+    }
+}
+
+function validateColor() {
+    return newColor.value.trim()
 }
 
 
 
+function validateMaker() {
+    if (newMaker.value === 'Default') {
+        throw new Error('Please pick a maker');
+    }
+}
 
-/* Loop through car array to display listings */
+function validateModel() {
+    if (newModel.value === 'Default') {
+        throw new Error('Please pick a model');
+    }
+}
+
+function showMessage(replyField, message, error = false) {
+    if (error) {
+        toggleError(replyField)
+    } else {
+        replyField.classList.remove('errorReply')
+        replyField.classList.add('successReply');
+    }
+
+    replyField.textContent = message;
+    
+    setTimeout(() => replyField.textContent = '', 5000)
+}
+
+function toggleError(replyField) {
+    replyField.classList.remove('successReply')
+    replyField.classList.add('errorReply')
+}
+
+
+
 function initiateListings(arr) {
-    arr.forEach((car) => {
-        updateListings(car, listingsTable)
-    })
+    arr.forEach((car) => updateListings(car));
 }
 
 
 
 // Add event listeners to form instead of the button
-const newListingForm = document.querySelector('#newListing')
-const searchForm = document.querySelector('#searchForm')
+const newListingForm = document.querySelector('#newListing');
+const searchForm = document.querySelector('#searchForm');
 
 
 /* Listen for any new listings */
 newListingForm.addEventListener('submit', (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const customerName = validateName()
-    const license = validateLicense()
-    
-    
-    const newCar = new Car(license, newMaker.value, newModel.value, customerName, newYear.value, newColor.value, newPrice.value)
+    try {
+        validateMaker();
+        validateModel();
+        const color = validateColor()
+        const customerName = validateName();
+        const license = validateLicense();
         
-
-    cars.push(newCar)
-    updateListings(newCar)
-    resetListingsForm()
-
-    showMessage(newListingsReply, `Your new listing has been created!`)
+        const newCar = new Car(license, newMaker.value, newModel.value, customerName, newYear.value, color, newPrice.value);
+        
+        cars.push(newCar);
+        updateListings(newCar, true);
+        resetListingsForm();
+    
+        showMessage(newListingsReply, `Your new listing has been created!`);
+    } catch (error) {
+        showMessage(newListingsReply, `Error: ${error.message}`, true, true)
+    }
 })
+
 
 
 
 function resetListingsForm() {
-    newName.value = ''
-    newLicense.value = ''
-    newMaker.value = 'Default'
-    newModel.value = 'Default'
-    newColor.value = ''
-    newYear.value = ''
-    newPrice.value = ''
+    newName.value = '';
+    newLicense.value = '';
+    newMaker.value = 'Default';
+    newModel.value = 'Default';
+    newColor.value = '';
+    newYear.value = '';
+    newPrice.value = '';
 }
 
 
 
+function updateListings(car, newListing = false) {
+    const tr = tableBody.insertRow(-1);
+    const discountTd = hasDiscount(car)
+    const priceTd = document.createElement('td')
+    priceTd.textContent = `$${car.price}`
 
-
-function updateListings(car, tableBody) {
-    let price = car.price
-    let priceTd = `<td>$${price}</td>`
-    if (thisYear - car.year > 10) {
-        price = car.discountPrice()
-        priceTd = `<td class='hasDiscount'>$${price}</td>`
+    if (newListing) {
+        tr.classList.add('newListing')
     }
 
-    
-    /* Reaplace this */
-    const tr = tableBody.insertRow(-1)
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 6; i++){
         let td = document.createElement('td')
+        td.textContent = Object.values(car)[i]
+        tr.appendChild(td)
     }
-    tr.innerHTML = `<td>${car.licensePlate}</td>
-                    <td>${car.maker}</td>
-                    <td>${car.model}</td>
-                    <td>${car.owner}</td>
-                    <td>${car.year}</td>
-                    <td>${car.color}</td>
-                    ${priceTd}
-                    `
-    tableBody.appendChild(tr)
+    
+    tr.appendChild(priceTd);
+    tr.appendChild(discountTd);
+    tableBody.appendChild(tr);
+}
+
+
+
+function hasDiscount(car) {
+    const discountTd = document.createElement('td');
+    const div = document.createElement('div');
+
+    if (thisYear - car.year > 10) {
+        const price = car.discountPrice();
+        div.textContent = `$${price}`;
+        discountTd.classList.add('hasDiscount');
+        discountTd.appendChild(div)
+    } else {
+        discountTd.textContent = '---';
+    }
+    return discountTd;
 }
 
 
 
 
 
-/* Search functionality */
-const searchbar = document.querySelector('#searchbar')
-const filterLicense = document.querySelector('#filterLicense')
-const filterDiscount = document.querySelector('#filterDiscount')
 
 
+
+
+
+//
+//  Search functionality.
+//  Filter by discounted cars or search license plates
+//
+const searchbar = document.querySelector('#searchbar');
+const filterLicense = document.querySelector('#filterLicense');
+const filterDiscount = document.querySelector('#filterDiscount');
+let searchFilter;
 
 searchForm.addEventListener('submit', (e) => {
-    e.preventDefault()
-    const searchValue = searchbar.value
+    e.preventDefault();
+    const searchValue = searchbar.value;
 
-    if (filterYear.checked) {
+    if (filterLicense.checked) {
+        searchLicensePlate(searchValue);
+    } 
 
+
+})
+
+
+function search(filter, searchValue) {
+    return cars.find((car) => car[filter] === searchValue.toUpperCase())
+}
+
+
+searchbar.addEventListener('input', () => {
+    if (searchbar.validity.patternMismatch) {
+        searchbar.setCustomValidity('Please enter a license plate in the following format: ABC123');
+    } else {
+        searchbar.setCustomValidity('');
     }
 })
 
 
-function searchLicensePlate() {
-    const searchValue = searchbar.value
-    const car = cars.find((car) => car.licensePlate === searchValue)
-    
-    if (car) {
-        return `Car found: ${car.maker} ${car.model} listed by ${car.owner}`
+filterLicense.addEventListener('change', () => {
+    if (filterLicense.checked) {
+        searchbar.setAttribute('pattern', '^[A-Za-z]{3}\d{3}$');
     } else {
-        return `No car with license plate ${searchValue} found. Check spelling and try again`
+        searchbar.removeAttribute('pattern');
+    }
+})
+
+
+function searchLicensePlate(searchValue) {
+    const car = cars.find((car) => car.licensePlate === searchValue.toUpperCase());
+    if (car) {
+        searchReply.textContent = 'Car found:'
+        tableBody.innerHTML = '';
+        return updateListings(car);
+    } else {
+        return showMessage(searchReply, `No car with license plate ${searchValue.toUpperCase()} found. Check spelling and try again`);
     }
 }
 
 
-function searchDiscounts() {
-    const searchValue = +searchbar.value
-    const filteredCars = cars.filter((car) => car.year > 10)
+filterDiscount.addEventListener('change', () => {
+    filterDiscount.checked ? searchDiscounts() : resetTable(cars);
+})
 
-    updateListings(filteredCars, searchTable)
-    searchTable.classList.remove('hidden')
+
+function searchDiscounts() {
+    const filteredCars = cars.filter((car) => thisYear - car.year > 10);
+    resetTable(filteredCars)
 }
 
+
+function resetTable(arr) {
+    searchReply.textContent = ''
+    tableBody.innerHTML = '';
+    initiateListings(arr);
+}
+
+
+
+//
+// Toggle between Search listings and All listings
+//
+document.querySelector('#searchIcon').addEventListener('click', toggleSearch);
+document.querySelector('#returnIcon').addEventListener('click', toggleSearch);
+
+
+function toggleSearch() {
+    document.querySelector('.listings-header').classList.toggle('hidden');
+    document.querySelector('.searchContainer').classList.toggle('hidden');
+
+    resetTable(cars)
+}
 
 
 
@@ -219,36 +340,16 @@ function searchDiscounts() {
  */
 let opened = false;
 document.querySelector('#menuIcon').addEventListener('click', () => {
-    const menu = document.querySelector('nav ul div')
+    const menu = document.querySelector('nav ul div');
 
     if (!opened) {
-        menu.style.scale = '1'
-        return opened = true
+        menu.style.scale = '1';
+        return opened = true;
     } else {
-        menu.style.scale = '0'
+        menu.style.scale = '0';
         return opened = false;
     }
 })
 
 
-document.querySelector('#searchIcon').addEventListener('click', toggleSearch)
-document.querySelector('#returnIcon').addEventListener('click', toggleSearch)
 
-
-function toggleSearch() {
-    document.querySelector('.searchContainer').classList.toggle('hidden')
-    document.querySelector('.listings').classList.toggle('hidden')
-}
-
-
-
-// Validate all input
-// Verify customer name regex
-// to fix: align discount to the right of cell.
-// filter functionality
-
-
-/*
-To throw error or just display message????
-Or both???
-*/

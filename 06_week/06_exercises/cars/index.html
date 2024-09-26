@@ -38,8 +38,33 @@
                     <svg id='searchIcon' xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#2c2c2c"><path d="M380-320q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l224 224q11 11 11 28t-11 28q-11 11-28 11t-28-11L532-372q-30 24-69 38t-83 14Zm0-80q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
                 </div>
 
+                <div class='searchContainer hidden'>
+                    <div class="search-header">
+                        <h2>Search listings</h2>
+                        <svg id='returnIcon' xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#2c2c2c"><path d="M320-200q-17 0-28.5-11.5T280-240q0-17 11.5-28.5T320-280h244q63 0 109.5-40T720-420q0-60-46.5-100T564-560H312l76 76q11 11 11 28t-11 28q-11 11-28 11t-28-11L188-572q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l144-144q11-11 28-11t28 11q11 11 11 28t-11 28l-76 76h252q97 0 166.5 63T800-420q0 94-69.5 157T564-200H320Z"/></svg>
+                    </div>
+    
+                    <form id='searchForm'>
+    
+                        <div class="filterContainer">
+                            <label>Filter by:</label>
+                            <input type="checkbox" name="filter" id="filterLicense" checked>
+                            <label for="filterLicense">License Plate</label>
+                            <input type="checkbox" name="filter" id="filterDiscount">
+                            <label for="filterDiscount">Discounted Cars</label>
+                        </div>
+                        
+                        <div class='searchBar'>
+                            <input type="text" id='searchbar' name='search' pattern='^[A-Za-z]{3}\d{3}$' required>
+                            <button type="submit" value="search" id='search'>Search</button>
+                        </div>
+                    </form>
+    
+                    <p id="searchReply"></p>
+                </div>
 
-                <table>
+
+                <table id='listingsTable'>
                     <thead>
                         <tr>
                             <td>License Plate</td>
@@ -49,6 +74,7 @@
                             <td>Year</td>
                             <td>Color</td>
                             <td>Price</td>
+                            <td>Discounted price</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,50 +83,12 @@
             </div>
 
 
-            <div class='searchContainer hidden'>
-                <div class="search-header">
-                    <h2>Search listings</h2>
-                    <svg id='returnIcon' xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#2c2c2c"><path d="M320-200q-17 0-28.5-11.5T280-240q0-17 11.5-28.5T320-280h244q63 0 109.5-40T720-420q0-60-46.5-100T564-560H312l76 76q11 11 11 28t-11 28q-11 11-28 11t-28-11L188-572q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l144-144q11-11 28-11t28 11q11 11 11 28t-11 28l-76 76h252q97 0 166.5 63T800-420q0 94-69.5 157T564-200H320Z"/></svg>
-                </div>
 
-                <form id='searchForm'>
-
-                    <div class="filterContainer">
-                        <label>Filter by:</label>
-                        <input type="checkbox" name="filter" id="filterLicense">
-                        <label for="filterLicense">License Plate</label>
-                        <input type="checkbox" name="filter" id="filterYear">
-                        <label for="filterYear">Discounted Cars</label>
-                    </div>
-                    
-                    <div class='searchBar'>
-                        <input type="text" id='searchbar' name='search' required>
-                        <button type="submit" value="search" id='search'>Search</button>
-                    </div>
-                </form>
-
-                <div class='searchResults hidden'>
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>License Plate</td>
-                                <td>Maker</td>
-                                <td>Model</td>
-                                <td>Owner</td>
-                                <td>Year</td>
-                                <td>Color</td>
-                                <td>Price</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
     
     
             <div class="newListingContainer">
                 <h2>Create new listing </h2>
+                <p class='reply successReply' id='newListingsReply'></p>
                 <form id='newListing'>
                     <label for="licensePlate">License Plate</label>
                     <input type="text" id='licensePlate' pattern='^[A-Za-z]{3}\d{3}$' required>
@@ -140,12 +128,11 @@
                     <label for="customerName">Owner</label>
                     <input type="text" id='customerName' minlength='3' pattern='^[A-Za-z ]{3,}$' required>
                     <label for='year'>Year</label>
-                    <input required type="text" min='1886' id='year'>
+                    <input required type="number" min='1886' id='year'>
                     <label for="color">Color</label>
-                    <input required type="text" id='color'>
+                    <input type="text" id='color' pattern='^[A-Za-z]+$' required>
                     <label for="price">Price</label>
                     <input required type="number" name="price" min='1' id="price">
-                    <p class='reply' id='newListingsReply'></p>
                     <button type="submit" value="Create listing">Create Listing</button>
                 </form>
             </div>
