@@ -318,7 +318,6 @@ input, select {
 
     grid-column: span 2;
 }
-
 .newListingContainer .reply {
     grid-column: span 2;
     margin: 20px 0;
@@ -334,11 +333,8 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-input:invalid {
-    border: 1px solid red;
-}
 
-.newListing {
+.highlight {
     background-color: rgb(242, 255, 242);
 }
 
