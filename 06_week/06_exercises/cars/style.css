@@ -8,7 +8,7 @@
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;   
+    font-family: var(--font);  
     width: 100%;
     margin: auto;
 }
@@ -57,7 +57,7 @@ h3 {
 }
 
 p, input, select, button {
-    font-family: var(--font2);
+    font-family: var(--fot);
     font-weight: 500;
 }
 
@@ -106,13 +106,14 @@ nav ul div li:hover {
 /* Hero Banner Styling */
 .heroBanner {
     width: 100vw;
-    max-height: 737px;
+    max-height: 300px;
     overflow: hidden;
     margin-bottom: 50px;
 }
 
 .heroBanner img {
-    height: 737px;
+    object-position: center;
+    height: 300px;
     object-fit: cover;
     width: 100%;
 }
@@ -125,22 +126,31 @@ Content Container
 */
 .contentContainer {
     margin: auto;
-    display: grid;
-    grid-template-columns: 60% 40%;
+    display: flex;
     width: 80%;
-    gap: 10px;
+    column-gap: 10px;
+    row-gap: 20px;
+    flex-wrap: wrap;
 }
 
-.contentContainer h2 {
-    margin: 0 0 40px;
+
+
+
+
+/* Listings Styling */
+
+#listingsTable {
+    margin: 40px 0 0;
+    max-width: 715px;
 }
 
+.listings {
+    flex: 1;
+    min-width: 585px;
+    border: 1px solid var(--lightgrey);
+    padding: 20px;
+}
 
-
-
-
-
-/* Table Styling */
 .listings-header {
     display: flex;
     justify-content: space-between;
@@ -155,20 +165,8 @@ Content Container
     cursor: pointer;
 }
 
-.listings {
-    min-width: 555px;
-    border: 1px solid var(--lightgrey);
-    padding: 20px;
-}
 
 
-
-
-
-
-
-
-/* Table Styling */
 table {
     border-collapse: collapse;
     margin: 0 0 40px;
@@ -189,6 +187,7 @@ td {
 td.hasDiscount > div {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 td.hasDiscount > div:after {
@@ -202,7 +201,6 @@ td.hasDiscount > div:after {
 }
 
 .reply {
-    font-family: Tahoma;
     font-size: 0.9em;
 }
 
@@ -229,9 +227,6 @@ Search Form Styling
 }
 
 
-.searchContainer {
-    grid-column: 1;
-}
 
 .searchContainer input[type='text'] {
     width: 60%;
@@ -246,7 +241,7 @@ Search Form Styling
 }
 
 #searchForm {
-    margin: 0 0 40px;
+    margin: 40px 0;
 } 
 
 
@@ -256,7 +251,6 @@ Search Form Styling
 
 .searchContainer > .reply {
     font-size: 0.9em;
-    font-weight: lighter;
     margin: 20px 0;
 }
 
@@ -291,15 +285,23 @@ Search Form Styling
 New Listing Form Styling 
 */
 .newListingContainer {
-    grid-column: 2;
     background-color: var(--white);
     padding: 20px;
     border: 1px solid var(--lightgrey);
+    max-width: 400px;
+    flex: 1;
 }
 
 #newListing {
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 40% 60%;
+    margin: 40px 0 0;
+    column-gap: 10px;
+}
+
+
+#newListing label, #newListing input, #newListing select {
+    font-size: 0.8em;
 }
 
 label {
