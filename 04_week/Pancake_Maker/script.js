@@ -1,68 +1,115 @@
-
+'use strict'
 const displayPrice = document.querySelectorAll('#totalPrice')
-let basePrice = +document.querySelector('#type').value
+let basePrice = 5
 let toppingsPrice = 0;
 let deliveryCost = 0;
 let totalPancakeCount = 0;
 let pancake = {pancakeBase: 'Classic', toppings: [], extras: []}
 const allOrders = []
 let ticket = []
+let currentTimeout;
 
-const reply = document.querySelector('.reply')
+const reply = document.querySelector('#reply');
+
+const placeOrderBtn = document.querySelector('#placeOrder')
+const customerName = document.querySelector('#customerName')
 
 
 
-
-
-/* Listening for changes in customization */
-document.addEventListener('change', (e) => {
-    if (e.target.id === 'type') {
-        basePrice = +e.target.value
-        pancake.pancakeBase = e.target.selectedOptions[0].textContent.match(/[a-z]/gi).join('')
-    } else if (e.target.name === 'topping') {
-        if (e.target.checked) {
-            toppingsPrice++
-            pancake.toppings.push(e.target.id)
-        } else {
-            toppingsPrice--
-            pancake.toppings.filter((a) => a !== e.target.id)
-        }
-    } else if (e.target.name === 'extra') {
-        if (e.target.checked) {
-            toppingsPrice += +e.target.value
-            pancake.extras.push(e.target.id)
-        } else {
-            toppingsPrice -= e.target.value
-            pancake.extras.filter((a) => a !== e.target.id)
-        }
-    } else if (e.target.name === 'delivery') {
-        e.target.id === 'delivery' ? deliveryCost = 5 : deliveryCost = 0
+//
+//  Display message to the user function
+//
+function showMessage(msg) {
+    reply.textContent = msg
+    if (currentTimeout) {
+        clearTimeout(currentTimeout)
     }
+    return currentTimeout = setTimeout(() => reply.textContent = '', 4000)
+}
+
+
+
+//
+//  Customizing the pancake
+//  Event listeners and functions
+const pancakeType = document.querySelector('#type')
+const pancakeTypeOptions = document.querySelectorAll('#type option')
+
+pancakeType.addEventListener('change', () => {
+    basePrice = +pancakeType.value
+    const pancakeId = Array.from(pancakeTypeOptions).find((a) => +a.value === basePrice)
+    pancake.pancakeBase = pancakeId.id
     updatePrice()
 })
 
 
+const toppings = document.querySelectorAll('input[name="topping"]')
+toppings.forEach((el) => {
+    el.addEventListener('change', () => {
+        el.checked ? addTopping(el, 'toppings') : removeTopping(el, 'toppings')
+    })
+})
+
+const extras = document.querySelectorAll("input[name='extra']")
+extras.forEach((el) => {
+    el.addEventListener('change', () => {
+        el.checked ? addTopping(el, 'extras') : removeTopping(el, 'extras')
+    })
+})
+
+function addTopping(topping, category) {
+    pancake[category].push(topping.id)
+    toppingsPrice += +topping.value
+    updatePrice()
+}
+
+function removeTopping(topping, category) {
+    pancake[category].filter((a) => a !== topping.id)
+    toppingsPrice -= +topping.value
+    updatePrice()
+}
 
 
-/* Update Price */
+
+const deliveryChoice = document.querySelector('#delivery') 
+deliveryChoice.addEventListener('change', () => {
+    deliveryChoice.checked ? deliveryCost = 5 : deliveryCost = 0;
+})
+
+
+
+//
+//  Display how many items in the cart and current pancake price
+//
 function updatePrice() {
     for (let element of displayPrice) {
         element.textContent = `$${basePrice + toppingsPrice}`
-        element.classList.add('bounce')
-        setTimeout(() => element.classList.remove('bounce'), 500)
+        animate(element, 'bounce')
     }
 }
 
+function animate(el, animation) {
+    el.classList.add(animation)
+    setTimeout(() => el.classList.remove(animation), 500)
+}
+
+
+const cartCounter = document.querySelector('#orderCount')
 function updateCart() {
-    console.log(ticket)
-    document.querySelector('.orderCount').classList.remove('hidden')
+    if (totalPancakeCount === 0) {
+        cartCounter.classList.add('hidden')
+    } else {
+        cartCounter.classList.remove('hidden')
+    }
     count.textContent = totalPancakeCount
     resetPancake()
 }
 
 
 
-//Show order
+
+
+
 const viewOrderBtn = document.querySelector('#viewOrder')
 const summaryDetails = document.querySelectorAll('.summary p')
 const orderDisplay = document.querySelector('.orderDisplay')
@@ -75,9 +122,13 @@ viewOrderBtn.addEventListener('click', () => {
 
 
 
-//Add to cart event listener and functionality
+//
+// Add to Cart
+// Event listeners and functions
 const count = document.querySelector('#orderCount')
-document.querySelector('#addToCart').addEventListener('click', () => {
+const addToCartBtn = document.querySelector('#addToCart')
+
+addToCartBtn.addEventListener('click', () => {
     totalPancakeCount++
 
     if (ticket.length === 0) {
@@ -86,13 +137,11 @@ document.querySelector('#addToCart').addEventListener('click', () => {
         return updateCart()
     }
 
-    const pancakeIndex = ticket.findIndex((item) => {
-        return JSON.stringify(item.pancake) === JSON.stringify(pancake)
-    })
+    const cartNum = isInCart(pancake)
 
-    if (pancakeIndex !== -1) {
-        ticket[pancakeIndex].count++
-        ticket[pancakeIndex].cost += basePrice + toppingsPrice
+    if (cartNum !== -1) {
+        ticket[cartNum].count++
+        ticket[cartNum].cost += basePrice + toppingsPrice
         resetPancake()
         return updateCart()
     } else {
@@ -100,7 +149,15 @@ document.querySelector('#addToCart').addEventListener('click', () => {
         resetPancake()
         return updateCart()
     }
+
+
 })
+
+function isInCart(pancake) {
+    return ticket.findIndex((item) => {
+        return JSON.stringify(item.pancake) === JSON.stringify(pancake)})
+}
+
 
 function clearOrderDisplay() {
     orderDisplay.innerHTML = ''
@@ -112,110 +169,173 @@ function displayOrder() {
         orderDisplay.textContent = `Your cart is empty, try adding some delicious pancakes!`
     } else {
         ticket.forEach((item) => {  
-            let html = `<div>
-                        <p>${item.count}x ${item.pancake.pancakeBase} pancake, Toppings: ${item.pancake.toppings.length > 0 ? item.pancake.toppings.join(', ') : 'None'} Extras: ${item.pancake.extras.length > 0 ? item.pancake.extras.join(', ') : 'None'} Cost: $${item.cost}</p>
-                        <div>
-                        <button class="orderAdd">+</button>
-                        <button class="orderRemove">-</button>
-                        </div>
-                        </div>`
-            orderDisplay.innerHTML += html
+            const container = document.createElement('div')
+            const p = document.createElement('p')
+
+            p.textContent = `${item.count}x ${item.pancake.pancakeBase} pancake, Toppings: ${item.pancake.toppings.length > 0 ? item.pancake.toppings.join(', ') : 'None'} Extras: ${item.pancake.extras.length > 0 ? item.pancake.extras.join(', ') : 'None'} Cost: $${item.cost}`
+
+            const addBtn = document.createElement('button')
+            addBtn.classList.add('orderAdd')
+            addBtn.textContent = '+'
+            const rmBtn = document.createElement('button')
+            rmBtn.classList.add('orderRemove')
+            rmBtn.textContent = '-'
+
+            container.appendChild(p)
+            container.appendChild(addBtn)
+            container.appendChild(rmBtn)
+            orderDisplay.appendChild(container)
+        
             listenAddRemove()
         })
     }
 }
 
 
-/* Add more/Remove from cart functionality */
+
+//
+// Incrementing and decrement pancake functionality
+//
+function addToOrder(index) {
+    ticket[index].cost += ticket[index].cost / ticket[index].count
+    ticket[index].count++
+    totalPancakeCount++
+    updateCart()
+    clearOrderDisplay()
+    summaryTotalCost()
+    displayOrder()
+}
+
+
+function removeFromOrder(index) {
+    if (ticket[index].count > 1) {
+        ticket[index].cost -= ticket[index].cost / ticket[index].count
+        ticket[index].count--
+    } else {
+        ticket = ticket.filter((a) => a.index === index)
+    }
+    totalPancakeCount--
+    updateCart()    
+    clearOrderDisplay()
+    summaryTotalCost()
+    displayOrder()
+}
+
 function listenAddRemove() {
-    document.querySelectorAll('.orderAdd').forEach((button, index) => {
-        button.addEventListener('click', () => {
-            ticket[index].cost += ticket[index].cost / ticket[index].count
-            ticket[index].count++
-            totalPancakeCount++
-            updateCart()
-            clearOrderDisplay()
-            displayOrder()
-        })
+    const orderAddBtn = document.querySelectorAll('.orderAdd')
+    const orderRemoveBtn = document.querySelectorAll('.orderRemove')
+
+    orderAddBtn.forEach((button, index) => {
+        button.addEventListener('click', () => addToOrder(index))
     })
 
-    document.querySelectorAll('.orderRemove').forEach((button, index) => {
-        button.addEventListener('click', () => {
-            if (ticket[index].count > 1) {
-                ticket[index].cost -= ticket[index].cost / ticket[index].count
-                ticket[index].count--
-            } else {
-                ticket = ticket.filter((a) => a !== a[index])
-            }
-            totalPancakeCount--
-            updateCart()
-            clearOrderDisplay()
-            displayOrder()
-        })
+    orderRemoveBtn.forEach((button, index) => {
+        button.addEventListener('click', () => removeFromOrder(index))
     })
 }
 
 
 
-
-//Return to pancake customization
+//
+// Toggle Summary/Customization Functionality
+//
 const returnBtn = document.querySelector('#return')
 returnBtn.addEventListener('click', () => {
     toggleSummary()
-    orderDisplay.innerHTML = ''
+    clearOrderDisplay()
 })
 
 function toggleSummary() {
+    summaryTotalCost()
     document.querySelector('.summary').classList.toggle('hidden')
     document.querySelector('.customize').classList.toggle('hidden')
 }
 
-//Placing order functionality
-const placeOrderBtn = document.querySelector('#placeOrder')
-placeOrderBtn.addEventListener('click', () => {
-    let customerName = document.querySelector('#customerName').value
 
 
-    //Customer has to enter a name for their order
-    if (!customerName) {
-        reply.children[1].textContent = ''
-        reply.firstChild.textContent = 'Please enter a name for your order!'
-        reply.classList.toggle('hidden')
-        return setTimeout(() => reply.classList.toggle('hidden'), 2500)
-    } else {
-        allOrders.push(ticket)
 
-        //Update 'reply' message on success
-        reply.firstChild.textContent = `Your order was successful! 🥳`
-        reply.children[1].textContent = `Thank you for supporting our local business!`
-        reply.classList.toggle('hidden')
+//
+//  Display total cost of cart + any delivery fee
+//
+const totalCostDisplay = document.querySelector('#summaryTotalCost')
+function summaryTotalCost() {
+    let summaryCost = 0;
 
-        //Removing current pancake/customer info
-        resetPancake()
+    if (ticket.length > 1) {
+        summaryCost = ticket.reduce((a, b) => a + b.cost, 0)
+    } else if (ticket.length === 1) {
+        summaryCost = ticket[0].cost
     }
-    
-    setTimeout(() => {
-        updatePrice()
-        reply.classList.toggle('hidden')
-        toggleSummary()
-    }, 3000)
+        
+    totalCostDisplay.textContent = `$${summaryCost + deliveryCost}`
+    addDelivery()
+}
+
+
+const deliveryDisplay = document.querySelector('#deliveryCost')
+function addDelivery() {
+    deliveryCost === 5 ? deliveryChoice.textContent = `, including a $5 delivery cost` : deliveryDisplay.textContent = ``
+}
+
+
+
+
+//
+// Placing order functionality
+//
+placeOrderBtn.addEventListener('click', () => {
+    try {
+        validateName()
+
+        if (ticket.length < 1) {
+            throw new Error(`Cannot checkout empty cart`)
+        }
+
+        allOrders.push(JSON.stringify(ticket))
+        showMessage(`Your order was successful! 🥳 Thank you for supporting our local business!`)
+        resetPancake()
+        resetTicket()
+        clearOrderDisplay()
+    } catch (error) {
+        showMessage(`Error: ${error.message}`)
+    }
 })
+
+
+//
+//  Ensuring client name is not empty
+//
+function validateName() {
+    let name = customerName.value.trim()
+    if (name.length < 1) {
+        throw new Error(`Sorry, name is not valid!`)
+    }
+}
+
+
+
+
+//
+//  Reset pancake and cart functionality
+//
+function resetTicket() {
+    totalPancakeCount = 0;
+    ticket = []
+    return updateCart();
+}
 
 
 function resetPancake() {
     toppingsPrice = 0;
     basePrice = 5;
-    document.querySelector('#type').value = 5;
+    pancakeType.value = 5;
     document.querySelectorAll('input[name="topping"], input[name="extra"]').forEach((topping) => {
         topping.checked = false
     })
     pancake = {pancakeBase: 'Classic', toppings: [], extras: []}
+
     updatePrice()
 }
-
-
-
-
 
 
 
