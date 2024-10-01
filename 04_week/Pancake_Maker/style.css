@@ -37,6 +37,13 @@ header {
   border-bottom: 1px solid var(--secondaryColor);
 }
 
+a:has(.logo) {
+  text-decoration: none;
+  color: var(--secondaryColor)
+}
+
+
+
 .logo {
   display: flex;
   align-items: center;
@@ -248,7 +255,7 @@ h3 {
 }
 
 .special-card {
-  margin: 0 0 2rem;
+  margin: 0 0 3rem;
 }
 
 .special-card :where(h3, p) {
