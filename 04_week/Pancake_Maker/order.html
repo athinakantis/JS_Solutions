@@ -10,32 +10,48 @@
 
   <body>
     <header>
+      <a href='index.html'>
       <div class="logo">
         <img src="/images/icons/pancakeCo_logo.png" alt="pancake Co logo">
         <h1>Pancake Co&trade;</h1>
       </div>
+      </a>
 
       <nav>
         <ul>
-            <li>Order</li>
-            <li>Our Story</li>
+            <li><a href="order.html">Order</a></li>
+            <li><a href="about.html">Our Story</a></li>
         </ul>
       </nav>
     </header>
 
     <section class='order'>
-      <div class="price-banner"><span id="totalPrice">$5</span></div>
-
       <nav>
-        <button id='specials'>Specials</button>
-        <button id='custom'>I wanna make my own!</button>
+        <button type='button' id='specials'>Specials</button>
+        <button type='button' id='custom'>I wanna make my own!</button>
       </nav>
 
     <div class="customization-container">
       <div class="specials">
+        <div class="special-card">
+          <h3>Cherry Bomb $12</h3>
+          <p>It’s cher-ished for a reason: This Cherry/Mascarpone/White chocolate dream is everything you need! Limited Edition.</p>
+          <button class="orderAdd">Add to Cart</button>
+        </div>
+        <div class="special-card">
+          <h3>Pumpkin Spice Cinnamon Roll $11</h3>
+          <p>Why choose when you can have both? Our signature autumn pancake is back and calling your name. Limited Edition.</p>
+          <button class="orderAdd">Add to Cart</button>
+        </div>
+        <div class="special-card">
+          <h3>Banana Swirl $10</h3>
+          <p>Enjoy your favourite dessert in a pancake format. With a chocolatey sauce, bananas and meringue, no wonder it’s one of our best sellers!</p>
+          <button class="orderAdd">Add to Cart</button>
+        </div>
 
       </div>
-      <div class="customize">
+      <div class="customize hidden">
+        <div class="price-banner"><span id="totalPrice">$5</span></div>
         <h2>Customize Your Pancake</h2>
         <div class="customization-section">
           <label for="type">Choose your pancake type:</label>
@@ -124,6 +140,6 @@
         <p>Copyright &copy 2024 Pancake Co &trade;</p>
       </footer>
 
-    <script src="script.js"></script>
+    <script src="order.js"></script>
   </body>
 </html>
