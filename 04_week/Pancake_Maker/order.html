@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pancake Co™ - Your local pancake parlor</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="shortcut icon" href="images/icons/pancakeCo_logo.png" type="image/x-icon">
+  </head>
+
+  <body>
+    <header>
+      <div class="logo">
+        <img src="/images/icons/pancakeCo_logo.png" alt="pancake Co logo">
+        <h1>Pancake Co&trade;</h1>
+      </div>
+
+      <nav>
+        <ul>
+            <li>Order</li>
+            <li>Our Story</li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class='order'>
+      <div class="price-banner"><span id="totalPrice">$5</span></div>
+
+    <div class="customization-container">
+      <div class="customize">
+        <h2>Customize Your Pancake</h2>
+        <div class="customization-section">
+          <label for="type">Choose your pancake type:</label>
+          <select id="type">
+            <option value="5" id='Classic'>Classic - $5</option>
+            <option value="6" id='Chocolate'>Chocolate - $6</option>
+            <option value="7" id='Blueberry'>Blueberry - $7</option>
+          </select>
+        </div>
+        <div class="customization-section-container">
+        <div class="customization-section">
+          <p>Select your toppings ($1 each):</p>
+          <div>
+            <input type="checkbox" name='topping' id="Nuts" value="1" />
+            <label for='Nuts'>Nuts</label>
+          </div>
+          <div>
+            <input type="checkbox" name='topping' id="Bananas" value="1" />
+            <label for='Bananas'>Bananas</label><br>
+          </div>
+          <div>
+            <input type="checkbox" name='topping' id="Syrup" value="1" />
+            <label for='Syrup'>Syrup</label>
+          </div>
+        </div>
+
+        </div.>
+        <div class="customization-section">
+          <p>Add extras:</p>
+          <div>
+            <input type="checkbox" name='extra' id="Whipped Cream" value="2" />
+            <label for='Whipped Cream'>Whipped Cream - $2</label>
+          </div>
+          <div>
+            <input type="checkbox" name='extra' id="Ice Cream" value="3" />
+            <label for='Ice Cream'>Ice cream - $3</label>
+          </div>
+        </div>
+
+          <div class="price-display">
+            <h3>Total Price: <span id="totalPrice">$5</span></h3>
+          </div>
+
+        <div>
+          <button type='button' id='addToCart'>Add to Cart</button>
+          <button type='button' id="viewOrder">View order</button>
+        </div>
+
+          <div class='hidden' id='orderCount'></div>
+        </div>
+
+      </div>
+
+      <div class="summary hidden">
+        <h2>Your order summary:</h2>
+          <div class='orderDisplay'></div>
+        <p>Total price: <span id='summaryTotalCost'></span><span id='deliveryCost'></span></p>
+        <div class="customerDetails">
+          <label for="customerName">Name:</label><br/>
+          <input type="text" id='customerName' required/> 
+          <p>Delivery option:</p>
+          <div>
+            <input type="radio" name="delivery" id="eatIn" checked>
+            <label for='eatIn'>Eat in</label>
+          </div>
+          <div>
+            <input type="radio" name="delivery" id="pickUp">
+            <label for='pickUp'>Pick up</label>
+          </div>
+          <div>
+            <input type="radio" name="delivery" id="delivery">
+            <label for='delivery'>Delivery - $5</label>
+          </div>
+        </div>
+        <p id="reply"></p>
+        <div>
+          <button type="submit" id="placeOrder">Place order</button>
+          <button type='button' id="return">Return</button>
+        </div>
+      </div>
+    </section>
+
+
+
+      <footer>
+        <p>Copyright &copy 2024 Pancake Co &trade;</p>
+      </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
