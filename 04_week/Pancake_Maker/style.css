@@ -21,8 +21,7 @@ body {
   font-family: var(--font);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-
+  position: relative;
 } 
 
 
@@ -32,7 +31,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 40px;
+  height: 3rem;
   padding: 0 15px;
   border-bottom: 1px solid var(--secondaryColor);
 }
@@ -133,6 +132,10 @@ PROMO SECTION
   margin: 20px 0 0;
 }
 
+.promo-container:nth-child(even) > div {
+  flex-direction: row-reverse;
+}
+
 .image-container {
   max-width: 700px;
   min-width: 600px;
@@ -180,9 +183,11 @@ h3 {
 .order > nav {
   margin: auto;
   max-width: 600px;
+  display: flex;
+  gap: 3px;
 }
 
-.order > nav > button {
+.order > nav button {
   background-color: var(--primaryColor);
   color: var(--secondaryColor);
   position: relative;
@@ -190,7 +195,29 @@ h3 {
   border-left: 1px solid var(--secondaryColor);
   border-top: 1px solid var(--secondaryColor);
   border-right: 1px solid var(--secondaryColor);
+  font-size: 1.2rem;
+  z-index: 1;
 }
+
+.order > nav > div {
+  position: relative;
+}
+
+#cartCount {
+  position: absolute;
+  background-color: red;
+  color: white;
+  z-index: 3;
+  top: -5px;
+  right: -5px;
+  padding: 5px;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+}
+
+
 
 .order {
   width: 80%;
@@ -203,23 +230,43 @@ h3 {
   padding: 2rem;
   border: 1px solid var(--secondaryColor);
   margin: auto;
+  position: relative;
+  z-index: 2;
 }
+
+
 
 
 .customization-section {
   padding: 1rem 0;
 }
 
-.customization-section > p {
+/* .customization-section > p {
   padding: 0 0 1rem;
 }
-.customization-section > div {
+ */
+
+:where(.customization-section, .summary) :where(p) {
+  padding: 0 0 1rem;
+}
+
+:where(.customization-section, .summary, .customerDetails) :where(div) {
   margin: 0.3rem 0;
 }
 
-.customize > h2 {
+:where(.customize, .summary) > h2 {
   margin: 0 0 1rem;
 }
+
+input, select {
+  font-family: inherit;
+  padding: 3px;
+}
+
+.order button:not(.order nav button) {
+  padding: 0.5rem 1rem;
+}
+
 
 
 .price-display {
@@ -237,22 +284,40 @@ h3 {
   align-items: center;
   justify-content: center;
   position: absolute;
+  top: 2rem;
+  right: 2rem;
 }
 
 .hidden {
   display: none;
 }
 
+.order nav button.active {
+  text-decoration: underline;
+  z-index: 3;
+}
+
+
+
 
 /* Specials Styling */
-.specials .orderAdd {
-  padding: 0.5rem 1rem;
-  font-size: 1.5rem;
+.specials {
+  display: none;
 }
 
-#specials {
-  text-decoration: underline;
+.customize {
+  display: none;
 }
+
+.summary {
+  display: none;
+  
+}
+
+.active:where(.specials, .customize, .summary) {
+  display: block;
+}
+
 
 .special-card {
   margin: 0 0 3rem;
@@ -265,6 +330,12 @@ h3 {
 
 /* Footer Styling */
 footer {
-  height: 10vh;
-  
+  position: absolute;
+  bottom: 0;
+  left: 0;  
+  padding: 0.5rem;
+  width: 100%;
 }
+
+
+@media only screen and ()

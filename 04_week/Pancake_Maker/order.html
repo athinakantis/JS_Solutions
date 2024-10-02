@@ -27,12 +27,16 @@
 
     <section class='order'>
       <nav>
-        <button type='button' id='specials'>Specials</button>
+        <button type='button' class='active' id='specials'>Specials</button>
         <button type='button' id='custom'>I wanna make my own!</button>
+        <div>
+          <button type='button' id='viewCart'>View Cart</button>
+          <p id='cartCount' class='hidden'>1</p>
+        </div>
       </nav>
 
     <div class="customization-container">
-      <div class="specials">
+      <div class="specials active">
         <div class="special-card">
           <h3>Cherry Bomb $12</h3>
           <p>It’s cher-ished for a reason: This Cherry/Mascarpone/White chocolate dream is everything you need! Limited Edition.</p>
@@ -48,9 +52,9 @@
           <p>Enjoy your favourite dessert in a pancake format. With a chocolatey sauce, bananas and meringue, no wonder it’s one of our best sellers!</p>
           <button class="orderAdd">Add to Cart</button>
         </div>
-
       </div>
-      <div class="customize hidden">
+
+      <div class="customize">
         <div class="price-banner"><span id="totalPrice">$5</span></div>
         <h2>Customize Your Pancake</h2>
         <div class="customization-section">
@@ -94,24 +98,19 @@
           <div class="price-display">
             <h3>Total Price: <span id="totalPrice">$5</span></h3>
           </div>
-
-        <div>
-          <button type='button' id='addToCart'>Add to Cart</button>
-          <button type='button' id="viewOrder">View order</button>
-        </div>
-
-          <div class='hidden' id='orderCount'></div>
         </div>
 
       </div>
 
-      <div class="summary hidden">
+      <div class="summary">
         <h2>Your order summary:</h2>
           <div class='orderDisplay'></div>
         <p>Total price: <span id='summaryTotalCost'></span><span id='deliveryCost'></span></p>
         <div class="customerDetails">
-          <label for="customerName">Name:</label><br/>
-          <input type="text" id='customerName' required/> 
+          <div>
+            <label for="customerName">Name:</label>
+            <input type="text" id='customerName' required/> 
+          </div>
           <p>Delivery option:</p>
           <div>
             <input type="radio" name="delivery" id="eatIn" checked>
@@ -127,10 +126,7 @@
           </div>
         </div>
         <p id="reply"></p>
-        <div>
-          <button type="submit" id="placeOrder">Place order</button>
-          <button type='button' id="return">Return</button>
-        </div>
+        <button type="submit" id="placeOrder">Place order</button>
       </div>
     </section>
 
