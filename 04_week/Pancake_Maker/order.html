@@ -10,20 +10,63 @@
 
   <body>
     <header>
-      <a href='index.html'>
-      <div class="logo">
+      <button id='homeBtn' class="logo">
         <img src="/images/icons/pancakeCo_logo.png" alt="pancake Co logo">
         <h1>Pancake Co&trade;</h1>
-      </div>
-      </a>
+      </button>
 
       <nav>
         <ul>
-            <li><a href="order.html">Order</a></li>
-            <li><a href="about.html">Our Story</a></li>
+            <li><button id='redirectOrderBtn'>Order</button></li>
+            <li><button id='redirectAboutBtn'>Our Story</button></li>
         </ul>
       </nav>
     </header>
+
+
+    <section class="home active">
+    <div class='quote-container'>
+      <p>Don't take our word for it...</p>
+      <div class='quote'>
+        <q>The pancakes here are like fluffy clouds of comfort, served with a side of pure joy.</q>
+        <p>- The Pancake Post</p>
+      </div>
+    </div>
+
+    <div class="promo-container">
+      <div class='promo'>
+        <div class="image-container">
+          <picture>
+            <source srcset="images/cherryBomb_final_copy.webp" type="image/webp">
+            <source srcset="images/cherryBomb_final_copy.jpg" type="image/jpeg"> 
+            <img src="/images/cherryBomb_finalcopy.jpg" alt="Cherry Bomb Special Pancake">
+          </picture>
+        </div>
+        <div class='promo-info'>
+          <h3>Currently Visiting</h3>
+          <p>It’s cher-ished for a reason: This Cherry/Mascarpone/White chocolate dream is everything you need! Limited Edition.</p>
+          <a href="#"><button>Order Now</button></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="promo-container">
+      <div class='promo'>
+        <div class="image-container">
+          <picture>
+            <source srcset="images/cherryBomb_final_copy.webp" type="image/webp">
+            <source srcset="images/cherryBomb_final_copy.jpg" type="image/jpeg"> 
+            <img src="/images/cherryBomb_finalcopy.jpg" alt="Cherry Bomb Special Pancake">
+          </picture>
+        </div>
+        <div class='promo-info'>
+          <h3>Currently Visiting</h3>
+          <p>It’s cher-ished for a reason: This Cherry/Mascarpone/White chocolate dream is everything you need! Limited Edition.</p>
+          <a href="#"><button>Order Now</button></a>
+        </div>
+      </div>
+    </div>
+    </section>
 
     <section class='order'>
       <nav>
@@ -31,7 +74,7 @@
         <button type='button' id='custom'>I wanna make my own!</button>
         <div>
           <button type='button' id='viewCart'>View Cart</button>
-          <p id='cartCount' class='hidden'>1</p>
+          <p id='cartCount' class='hidden'></p>
         </div>
       </nav>
 
@@ -40,17 +83,17 @@
         <div class="special-card">
           <h3>Cherry Bomb $12</h3>
           <p>It’s cher-ished for a reason: This Cherry/Mascarpone/White chocolate dream is everything you need! Limited Edition.</p>
-          <button class="orderAdd">Add to Cart</button>
+          <button class="addToCart" id='Cherry Bomb' value='12'>Add to Cart</button>
         </div>
         <div class="special-card">
           <h3>Pumpkin Spice Cinnamon Roll $11</h3>
           <p>Why choose when you can have both? Our signature autumn pancake is back and calling your name. Limited Edition.</p>
-          <button class="orderAdd">Add to Cart</button>
+          <button class="addToCart" id='Pumpkin Spice Cinnamon Roll' value='11'>Add to Cart</button>
         </div>
         <div class="special-card">
           <h3>Banana Swirl $10</h3>
           <p>Enjoy your favourite dessert in a pancake format. With a chocolatey sauce, bananas and meringue, no wonder it’s one of our best sellers!</p>
-          <button class="orderAdd">Add to Cart</button>
+          <button class="addToCart" id='Banana Swirl' value='10'>Add to Cart</button>
         </div>
       </div>
 
@@ -108,8 +151,8 @@
         <p>Total price: <span id='summaryTotalCost'></span><span id='deliveryCost'></span></p>
         <div class="customerDetails">
           <div>
-            <label for="customerName">Name:</label>
-            <input type="text" id='customerName' required/> 
+            <label for="orderName">Name:</label>
+            <input type="text" id='orderName' required/> 
           </div>
           <p>Delivery option:</p>
           <div>
@@ -131,11 +174,26 @@
     </section>
 
 
-
       <footer>
+        <div class="openingHrs">
+          <h3>Opening Hours</h3>
+          <ul>
+            <li>Monday to Friday 8-17</li>
+            <li>Saturday 9-15</li>
+            <li>Sunday Closed</li>
+          </ul>
+        </div>
+
+        <div class='location'>
+          <h3>Find us!</h3>
+          <p>+040-211-429</p>
+          <p>Waldorf Street 17</p>
+          <p>Shoreditch, London</p>
+        </div>
+
         <p>Copyright &copy 2024 Pancake Co &trade;</p>
       </footer>
 
-    <script src="order.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>
