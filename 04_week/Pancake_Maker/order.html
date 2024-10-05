@@ -74,7 +74,7 @@
         <button type='button' id='custom'>I wanna make my own!</button>
         <div>
           <button type='button' id='viewCart'>View Cart</button>
-          <p id='cartCount' class='hidden'></p>
+          <p id='cartCount'></p>
         </div>
       </nav>
 
@@ -83,17 +83,17 @@
         <div class="special-card">
           <h3>Cherry Bomb $12</h3>
           <p>It’s cher-ished for a reason: This Cherry/Mascarpone/White chocolate dream is everything you need! Limited Edition.</p>
-          <button class="addToCart" id='Cherry Bomb' value='12'>Add to Cart</button>
+          <button class="addSpecial" name='Cherry Bomb' value='1'>Add to Cart</button>
         </div>
         <div class="special-card">
           <h3>Pumpkin Spice Cinnamon Roll $11</h3>
           <p>Why choose when you can have both? Our signature autumn pancake is back and calling your name. Limited Edition.</p>
-          <button class="addToCart" id='Pumpkin Spice Cinnamon Roll' value='11'>Add to Cart</button>
+          <button class="addSpecial" name='Pumpkin Spice Cinnamon Roll' value='2'>Add to Cart</button>
         </div>
         <div class="special-card">
           <h3>Banana Swirl $10</h3>
           <p>Enjoy your favourite dessert in a pancake format. With a chocolatey sauce, bananas and meringue, no wonder it’s one of our best sellers!</p>
-          <button class="addToCart" id='Banana Swirl' value='10'>Add to Cart</button>
+          <button class="addSpecial" name='Banana Swirl' value='3'>Add to Cart</button>
         </div>
       </div>
 
@@ -141,6 +141,8 @@
           <div class="price-display">
             <h3>Total Price: <span id="totalPrice">$5</span></h3>
           </div>
+
+        <button type='button' id='addCustom'>Add to Cart</button>
         </div>
 
       </div>
@@ -148,7 +150,7 @@
       <div class="summary">
         <h2>Your order summary:</h2>
           <div class='orderDisplay'></div>
-        <p>Total price: <span id='summaryTotalCost'></span><span id='deliveryCost'></span></p>
+        <p id='summaryTotalCost'></p>
         <div class="customerDetails">
           <div>
             <label for="orderName">Name:</label>
@@ -173,6 +175,13 @@
       </div>
     </section>
 
+    <section class='confirmation'>
+      <div>
+        <h2>Hooray!</h2>
+        <p>Your order was completed! Thank you for supporting our local business 🫶</p>
+      </div>
+    </section>
+
 
       <footer>
         <div class="openingHrs">
@@ -189,6 +198,7 @@
           <p>+040-211-429</p>
           <p>Waldorf Street 17</p>
           <p>Shoreditch, London</p>
+          <p>pancakeCo@yahoo.com</p>
         </div>
 
         <p>Copyright &copy 2024 Pancake Co &trade;</p>
