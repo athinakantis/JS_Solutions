@@ -17,13 +17,14 @@
 }
 
 body {
-  background-color: white;
   color: var(--secondaryColor);
   font-family: var(--font);
   display: flex;
   flex-direction: column;
   position: relative;
   line-height: 1.2;
+  background-image: url('/images/BakingPattern.png');
+  background-repeat: repeat;
 } 
 
 
@@ -162,23 +163,23 @@ PROMO SECTION
 
 
 .promo-container {
-  margin: 20px 0 0;
+  margin: 20px auto;
+  max-width: 1200px;
 }
 
-.promo-container:nth-child(even) > div {
+.promo-container:nth-child(odd) > div {
   flex-direction: row-reverse;
 }
 
 .image-container {
-  max-width: 700px;
-  min-width: 600px;
-  flex: 3;
+  flex: 50%;
 }
 
 picture img {
   width: 100%;
   height: 400px;
   object-fit: cover;
+  object-position: bottom right;
 }
 
 .promo {
@@ -189,8 +190,7 @@ picture img {
 }
 
 .promo-info {
-  flex: 2;
-  max-width: 400px;
+  flex: 50%;
   background-color: var(--primaryColor);
   padding: 2rem;
   display: flex;
@@ -198,7 +198,6 @@ picture img {
 }
 
 .promo-info :where(h3, p) {
-  max-width: 400px;
   padding: 0 0 20px;
 }
 
@@ -265,7 +264,7 @@ h3 {
 .customization-container {
   width: 600px;
   background-color: var(--primaryColor);
-  padding: 2rem;
+  padding: 3rem 2rem;
   border: 1px solid var(--secondaryColor);
   margin: auto;
   position: relative;
@@ -281,7 +280,7 @@ h3 {
 
 
 :where(.customization-section, .summary) :where(p) {
-  padding: 0 0 1rem;
+  margin: 0 0 1rem;
 }
 
 :where(.customize, .summary) > h2 {
@@ -364,7 +363,7 @@ input, select {
 }
 
 
-.special-card {
+.special-card:not(.special-card:last-child) {
   margin: 0 0 3rem;
 }
 
@@ -372,6 +371,9 @@ input, select {
   margin: 0 0 0.7rem;
 }
 
+.orderDisplay {
+  margin: 2rem 0 3rem;
+}
 
 .orderItem {
   display: flex;
@@ -383,6 +385,11 @@ input, select {
 
 .orderItem > div {
   min-width: fit-content;
+}
+
+p:has(#summaryTotalCost), #summaryTotalCost, #deliveryFee {
+  font-size: 1.5rem;
+  margin: 0 0 2rem;
 }
 
 

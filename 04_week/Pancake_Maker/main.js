@@ -3,19 +3,26 @@
 //Initial values for cart and pancake.
 let totalPancakeCount = 0;
 const orderList = [];
-let cart = [];
-let customPancake = {pancakeBase: 'Classic', toppings: [], extras: [], special: false};
+const cart = [];
 let [basePrice, toppingsPrice, deliveryCost] = [5, 0, 0];
+let customPancake = {pancakeBase: 'Classic', toppings: [], extras: []};
 let currentTimeout;
 
-const specials = [{pancake: 'Cherry Bomb', cost: 12, special: true}, {pancake: 'Pumpkin Spice Cinnamon Roll', cost: 11, special: true}, {pancake: 'Banana Swirl', cost: 10, special: true}]
+const specials = [{pancake: 'Cherry Bomb', cost: 12}, {pancake: 'Pumpkin Spice Cinnamon Roll', cost: 11, special: true}, {pancake: 'Banana Swirl', cost: 10, special: true}]
+
+
 
 
 
 class Pancake {
-    constructor(count, pancake, special, cost) {
+    constructor(count, pancake, special, cost, name = 'Custom') {
         this.count = +count
-        this.pancake = pancake
+        this.name = name
+        this.pancake = {
+            pancakeBase: pancake.pancakeBase,
+            toppings: pancake.toppings,
+            extras: pancake.extras
+        }
         this.special = special
         this.cost = +cost
     }
@@ -30,6 +37,10 @@ class Pancake {
 
     removePancake() {
         return this.count--
+    }
+
+    isSpecial() {
+        return this.special
     }
 }
 
@@ -49,8 +60,7 @@ const cartCounter = document.querySelector('#cartCount');
 pancakeType.addEventListener('change', () => {
     basePrice = +pancakeType.value;
     const pancakeId = Array.from(pancakeTypeOptions).find((a) => +a.value === basePrice);
-    customPancake.pancakeBase = pancakeId.id;
-    console.log(customPancake.pancakeBase)
+    customPancake.pancakeBase = pancakeId.id
     return updatePrice()
 })
 
@@ -70,23 +80,18 @@ extras.forEach((el) => {
 function addTopping(topping, category) {
     customPancake[category].push(topping.id)
     toppingsPrice += +topping.value
-    console.log(customPancake.toppings)
-
     updatePrice()
 }
 
 function removeTopping(topping, category) {
     customPancake[category].filter((a) => a !== topping.id)
     toppingsPrice -= +topping.value
-    console.log(customPancake.toppings)
     updatePrice()
 }
 
 const deliveryChoice = document.querySelector('#delivery') 
 deliveryChoice.addEventListener('change', () => {
     deliveryChoice.checked ? deliveryCost = 5 : deliveryCost = 0;
-    console.log(deliveryChoice)
-
     summaryTotalCost()
 })
 
@@ -181,38 +186,31 @@ ADDING PANCAKES: Specials & Customs
 Functions, variables and event listeners  */
 const addCustomBtn = document.querySelector('#addCustom')
 const addSpecialsBtn = document.querySelectorAll('.addSpecial')
-addCustomBtn.addEventListener('click', () => {
-    console.log(customPancake)
-    addToCart(customPancake)
-})
+addCustomBtn.addEventListener('click', () => addToCart(customPancake))
 addSpecialsBtn.forEach((button, index) => {
     button.addEventListener('click', () => addToCart(specials[index], true))
 })
 
 
-//Current 'specials' :)
-
-
 //Check if pancake is already in cart
 function isInCart(pancake) {
-    cart.forEach((item) => console.log(item))
     return cart.findIndex((item) => JSON.stringify(item.pancake) === JSON.stringify(pancake))
 }
 
 //If pancake is already in cart, add to it. Else, push new pancake.
 function addToCart(pancake, special = false) {
-    let cartNum = isInCart(pancake)
-    console.log(cartNum)
+    const cartNum = isInCart(pancake)
     let cost;
 
-    special ? cost = pancake.cost : cost = basePrice + toppingsPrice;
+    special ? cost = pancake.cost : cost = basePrice + toppingsPrice
 
-    if (cart.length < 1 || cartNum === -1) {
-        cart.push({count: 1, pancake: pancake, cost: cost, special: special})
+    if (cartNum === -1) {
+        cart.push(new Pancake(1, pancake, special, cost, pancake.pancake))
     } else if (cartNum !== -1) {
-        cart[cartNum].cost += cost
-        cart[cartNum].count++
+        cart[cartNum].addPancake()
     }
+
+
     totalPancakeCount++
     displayOrder()
     updateCartCount()
@@ -225,7 +223,6 @@ function addToCart(pancake, special = false) {
 ORDER SUMMARY
 Functions, variables and event listeners*/
 const orderDisplay = document.querySelector('.orderDisplay');
-const [orderAddBtn, orderRmBtn] = document.querySelectorAll('.orderAdd, .orderRm');
 function displayOrder() {
     orderDisplay.innerHTML = ''
     if (cart.length < 1) {
@@ -233,11 +230,11 @@ function displayOrder() {
     } else {
         cart.forEach((item) => {
             let typeOfPancake;
-            if (item.special) {
-                typeOfPancake = `${item.pancake.pancake}`;
-            } else {
+            if (!item.isSpecial()) {
                 let [base, toppings, extras] = [item.pancake.pancakeBase, item.pancake.toppings, item.pancake.extras]
                 typeOfPancake = `${base} pancake, Toppings: ${toppings.length > 0 ? toppings.join(', ') : 'None'}, Extras: ${extras.length > 0 ? extras.join(', ') : 'None'}`
+            } else {
+                typeOfPancake = `${item.name}`
             }
 
             orderDisplay.innerHTML += `
@@ -257,11 +254,11 @@ function displayOrder() {
 
 
 //Removing from cart. Decrementing if more than 1 pancake, removing entirely if only one.
+const [orderAddBtn, orderRmBtn] = document.querySelectorAll('.orderAdd, .orderRm');
 function removeFromCart(index) {
     totalPancakeCount--
     if (cart[index].count > 1) {
-        cart[index].cost -= cart[index].cost / cart[index].count
-        cart[index].count--
+        cart[index].removePancake()
     } else {
         cart.splice(index, 1)
     }
@@ -289,13 +286,12 @@ function listenAddRemove() {
 
 //Displaying the total cost of all items in the cart
 const totalCostDisplay = document.querySelector('#summaryTotalCost')
+const deliverySpan = document.querySelector('#deliveryFee')
 function summaryTotalCost() {
     let summaryCost = cart.reduce((a, b) => a + b.cost, 0)
         
-    totalCostDisplay.textContent = `Total Cost: $${summaryCost + deliveryCost}`
-    if (deliveryCost === 5) {
-        totalCostDisplay.textContent += `, including a $5 delivery fee`   
-    }
+    totalCostDisplay.textContent = `$${summaryCost}`
+    deliveryCost === 5 ? deliverySpan.textContent = `, including a $5 delivery fee` : deliverySpan.textContent = ''
 }
 
 
