@@ -35,7 +35,7 @@ header {
   align-items: center;
   justify-content: space-between;
   height: 3rem;
-  padding: 0 15px;
+  padding: 0 1rem;
   border-bottom: 1px solid var(--secondaryColor);
 }
 
@@ -58,7 +58,6 @@ header h1 {
 }
 
 header img {
-  margin-left: 15px;
   width: 30px;
   height: 30px;
 }
@@ -141,7 +140,7 @@ PROMO SECTION
 .quote {
   padding: 2rem;
   max-width: 700px;
-  height: 200px;
+  height: max-content;
   background-color: var(--primaryColor);
   box-shadow: 7px 7px 0 var(--primaryShadow);
 }
@@ -177,12 +176,13 @@ PROMO SECTION
 
 picture img {
   width: 100%;
-  height: 400px;
+  height: 100%;
   object-fit: cover;
   object-position: bottom right;
 }
 
 .promo {
+  background-color: var(--primaryColor);
   display: flex;
   justify-content: center;
   width: 80%;
@@ -203,6 +203,7 @@ picture img {
 
 .promo-info button {
   margin: 20px 0 0;
+  width: fit-content;
 }
 
 h3 {
@@ -279,11 +280,11 @@ h3 {
 }
 
 
-:where(.customization-section, .summary) :where(p) {
+:where(.customization-section, .summary, .about) :where(p) {
   margin: 0 0 1rem;
 }
 
-:where(.customize, .summary) > h2 {
+:where(.customize, .summary, .about, .confirmation) > h2 {
   margin: 0 0 1rem;
 }
 
@@ -358,7 +359,7 @@ input, select {
   
 }
 
-.active:where(.specials, .customize, .summary) {
+.active:where(.specials, .customize, .summary, .confirmation, .about) {
   display: block;
 }
 
@@ -403,8 +404,6 @@ footer {
   background-color: white;
   display: flex;
   justify-content: space-around;
-  /* align-items: center; */
-  /* height: 155px; */
   line-height: 1.5;
   border-top: 1px solid var(--secondaryColor);
   padding: 2rem 0 5rem;
@@ -433,12 +432,13 @@ footer h3 {
   display: none;
   background-color: var(--primaryColor);
   padding: 2rem;
+  margin: 40px auto;
+  border: 1px solid var(--secondaryColor);
 }
 
 .confirmation > div > h2 {
   text-align: center;
   font-size: 2rem;
-  margin: 0 0 1rem;
 }
 
 .confirmation > div {
@@ -448,9 +448,138 @@ footer h3 {
 
 
 
+
+/* About Styling */
+.about {
+  margin: 40px auto;
+  padding: 2rem;
+  background-color: var(--primaryColor);
+  border: 1px solid var(--secondaryColor);
+  width: 600px;
+  line-height: 1.5;
+  display: none;
+}
+
+.about.active {
+  display: block;
+}
+
+
+.about #kindRegards {
+  text-align: end;
+}
+
+
+
 @keyframes bounce {
   50% {transform: translateY(-5px)}
 }
 
 
-@media only screen and ()
+@media only screen and (max-width: 800px) {
+  .home .promo {
+    width: 100%;
+  }
+
+  .home .quote-container {
+    width: 90%;
+  }
+
+  .home .quote q {
+    font-size: 1.5rem;
+  }
+}
+
+
+
+@media only screen and (max-width: 700px) {
+  .home .promo {
+    flex-direction: column;
+  }
+
+  .home .promo .image-container img {
+    height: 435px; 
+  }
+
+  .order nav {
+    max-width: 95%;
+  }
+
+  .order .customization-container,
+  .confirmation, .about {
+    width: 95%;
+  }
+}
+
+
+@media only screen and (max-width: 500px) {
+  .home .quote {
+    padding: 1.5rem;
+  }
+
+  .home .quote q {
+    font-size: 1rem;
+  }
+
+  .home .quote p {
+    margin: 0.3rem 0 0;
+  }
+
+
+  .home .promo .image-container img {
+    height: 300px;
+  }
+
+  .home .promo .promo-info {
+    padding: 1.5rem;
+  }
+  
+  .home .promo button {
+    margin: 0;
+  }
+
+  .order nav button {
+    padding: 1rem;
+  }
+
+  .order #viewCart {
+    height: 100%;
+  }
+
+  .order .price-banner {
+    font-size: 2rem;
+    width: 4rem;
+    height: 4rem;
+    top: 1rem;
+    right: 1rem;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  header h1 {
+    font-size: 0.8rem;
+  }
+
+
+  .order {
+    margin: 2rem 0;
+  }
+
+  .order .customization-container {
+    width: 100%;
+    padding: 2rem 1rem;
+  }
+
+  .order nav {
+    max-width: 100%;
+  }
+
+  .order nav button {
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+
+  .special-card :where(h3, p) {
+    margin: 0 0 1.5rem;
+  }
+}

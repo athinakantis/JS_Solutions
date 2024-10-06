@@ -28,7 +28,7 @@ class Pancake {
     }
     
     getTotalCost() {
-        return this.price * this.count;
+        return this.cost * this.count;
     }
 
     addPancake() {
@@ -97,11 +97,8 @@ deliveryChoice.addEventListener('change', () => {
 
 
 
-function resetTicket() {
-    for (let item of cart) {
-        cart.slice(-1, 1)
-    }
-    console.log(`cart should be empty :) .. `, cart)
+function resetCart() {
+    cart.length = 0;
 }
 
 
@@ -133,8 +130,10 @@ function showMessage(msg) {
 /* Site Navigation functionality & Event Listeners */
 const [specialsBtn, customBtn, viewCartBtn] = document.querySelectorAll('#specials, #custom, #viewCart');
 const [specialsPage, customPage, summary] = document.querySelectorAll('.specials, .customize, .summary');
-const [homeBtn, redirectOrderBtn, redirectAboutBtn] = document.querySelectorAll('#homeBtn, #redirectOrderBtn, #redirectAboutBtn');
-const [home, order, confirmation] = document.querySelectorAll('.home, .order, .confirmation');
+const [homeBtn, redirectAboutBtn] = document.querySelectorAll('#homeBtn, #redirectAboutBtn');
+const [home, order, confirmation, about] = document.querySelectorAll('.home, .order, .confirmation, .about');
+const redirectOrderBtns = document.querySelectorAll('.redirectOrderBtn')
+
 
 let active = specialsBtn
 let currentPage = home;
@@ -160,8 +159,8 @@ viewCartBtn.addEventListener('click', (e) => {
 
 
 homeBtn.addEventListener('click', (e) => togglePage(home));
-redirectOrderBtn.addEventListener('click', (e) => togglePage(order));
-redirectAboutBtn.addEventListener('click', () => console.log('hello'));
+redirectOrderBtns.forEach((button) => button.addEventListener('click', () => togglePage(order)))
+redirectAboutBtn.addEventListener('click', () => togglePage(about, ))
 
 
 function togglePage(el) {
@@ -193,13 +192,16 @@ addSpecialsBtn.forEach((button, index) => {
 
 
 //Check if pancake is already in cart
-function isInCart(pancake) {
+function isInCart(pancake, special = false) {
+    if (special) {
+        return cart.findIndex((item) => item.name === pancake.pancake)
+    }
     return cart.findIndex((item) => JSON.stringify(item.pancake) === JSON.stringify(pancake))
 }
 
 //If pancake is already in cart, add to it. Else, push new pancake.
 function addToCart(pancake, special = false) {
-    const cartNum = isInCart(pancake)
+    const cartNum = isInCart(pancake, special)
     let cost;
 
     special ? cost = pancake.cost : cost = basePrice + toppingsPrice
@@ -231,7 +233,8 @@ function displayOrder() {
         cart.forEach((item) => {
             let typeOfPancake;
             if (!item.isSpecial()) {
-                let [base, toppings, extras] = [item.pancake.pancakeBase, item.pancake.toppings, item.pancake.extras]
+                let [base, toppings, extras] = [item.pancake.pancakeBase, item.pancake.toppings, item.pancake.extras];
+
                 typeOfPancake = `${base} pancake, Toppings: ${toppings.length > 0 ? toppings.join(', ') : 'None'}, Extras: ${extras.length > 0 ? extras.join(', ') : 'None'}`
             } else {
                 typeOfPancake = `${item.name}`
@@ -247,13 +250,14 @@ function displayOrder() {
             </div>
             `
         })
-        listenAddRemove()
-        summaryTotalCost()
     }
+    listenAddRemove()
+    summaryTotalCost()
 }
 
 
-//Removing from cart. Decrementing if more than 1 pancake, removing entirely if only one.
+// Removing from cart. 
+// Decrementing if more than 1 pancake, removing entirely if only one.
 const [orderAddBtn, orderRmBtn] = document.querySelectorAll('.orderAdd, .orderRm');
 function removeFromCart(index) {
     totalPancakeCount--
@@ -268,15 +272,17 @@ function removeFromCart(index) {
     displayOrder()
 }
 
+
 //Attaching event listeners to summary buttons, in case user wants to add or remove from their cart
 function listenAddRemove() {
     const orderAddBtn = document.querySelectorAll('.orderAdd')
     const orderRemoveBtn = document.querySelectorAll('.orderRm')
 
     orderAddBtn.forEach((button, index) => {
-        let pancake = cart[index].pancake
-        button.addEventListener('click', () => addToCart(pancake, pancake.special))
-    })
+        button.addEventListener('click', () => {
+        cart[index].addPancake();
+        displayOrder()
+    })})
 
     orderRemoveBtn.forEach((button, index) => {
         button.addEventListener('click', () => removeFromCart(index))
@@ -288,9 +294,9 @@ function listenAddRemove() {
 const totalCostDisplay = document.querySelector('#summaryTotalCost')
 const deliverySpan = document.querySelector('#deliveryFee')
 function summaryTotalCost() {
-    let summaryCost = cart.reduce((a, b) => a + b.cost, 0)
-        
-    totalCostDisplay.textContent = `$${summaryCost}`
+    let summaryCost = 0;
+    cart.forEach((item) => summaryCost += item.getTotalCost())
+    totalCostDisplay.textContent = `$${summaryCost + deliveryCost}`
     deliveryCost === 5 ? deliverySpan.textContent = `, including a $5 delivery fee` : deliverySpan.textContent = ''
 }
 
@@ -301,17 +307,19 @@ placeOrderBtn.addEventListener('click', placeOrder)
 
 function placeOrder() {
     try {
-        const name = document.querySelector('#orderName').trim()
+        const name = document.querySelector('#orderName').value.trim()
         
         if (!name || name.length < 1) {
             throw new Error(`Order is missing a name`)
         } 
 
         orderList.push(cart);
-        resetTicket()
+        resetCart()
+
+        togglePage(confirmation)
 
     } catch (error) {
-        showMessage(`Error:`, error.message)
+        showMessage(`Error: ` + error.message)
     }
 }
 
